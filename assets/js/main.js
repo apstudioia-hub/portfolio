@@ -82,8 +82,8 @@ const I18N = {
   // ---------- HOME ----------
   'home.eyebrow': { fr: 'Portfolio · 2026', en: 'Portfolio · 2026' },
   'home.heroTitle': {
-    fr: 'Aurélien <em class="em">POTOLA</em><br>créateur visuel<br><em class="em contrast">luxe & automobile</em>.',
-    en: 'Aurélien <em class="em">POTOLA</em><br>visual creator<br><em class="em contrast">luxury & automotive</em>.'
+    fr: 'Aurélien <em class="em">POTOLA</em><br>créateur visuel<br><em class="em contrast">& automobile</em>.',
+    en: 'Aurélien <em class="em">POTOLA</em><br>visual creator<br><em class="em contrast">& automotive</em>.'
   },
   'home.heroLead': {
     fr: 'Étudiant en Bachelor Techniques de Commercialisation, créatif passionné par le commerce et la communication visuelle. Je conçois des concepts visuels premium dans l\'univers du luxe et de l\'automobile.',

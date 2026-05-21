@@ -252,7 +252,7 @@
     <p class="huge-foot" id="pd-footer-name">Projet.</p>
     <div class="footer-grid">
       <div>
-        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Visual Merchandising & Création IA. Disponible pour une alternance Master Marketing.</p>
+        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Créateur de visuel & chargé de Marketing. En recherche d'alternance Master Marketing.</p>
         <div style="margin-top: var(--s-3);">
           <a href="contact.html" class="btn btn-primary" style="font-size:0.85rem;padding:0.75rem 1.4rem;" data-i18n="cta.contactArrow">Me contacter →</a>
         </div>
@@ -294,25 +294,25 @@
 <!-- ===== DATA + DYNAMIC LOGIC ===== -->
 <script>
 const PROJECTS_DATA = {
-  'audi-r8': {
-    title: 'R8 — <em style="font-style:italic; color:var(--accent);">2026 Concept</em>',
-    name: 'Audi R8',
-    eyebrow: 'AUDI · CONCEPT CARS',
+  'audi-rs7': {
+    title: 'Audi <em style="font-style:italic; color:var(--accent);">RS7</em>',
+    name: 'Audi RS7',
+    eyebrow: 'AUDI · LUXE',
     brand: 'Audi',
-    category: 'Concept Cars',
+    category: 'Berline sportive · Luxe',
     year: '2026',
-    lead: "Réinterprétation contemporaine de l'icône supercar allemande. Une série visuelle entre lumière clinique, surfaces métalliques et héritage Quattro.",
-    context: "L'Audi R8 est une icône — et après son retrait du catalogue, j'ai imaginé sa renaissance. Le défi : conserver l'ADN supercar tout en projetant la marque dans une esthétique 2026, plus minérale et plus sculpturale.",
-    quote: 'Une supercar n\'est pas qu\'une voiture, c\'est une déclaration de design.',
-    folder: './Visuel par page/Projets/AUDI/R8 2026 Concept/',
+    lead: "Berline sportive haute performance — l'Audi RS7 en 5 visuels entre puissance allemande et élégance sculpturale.",
+    context: "L'Audi RS7 est l'expression ultime du grand tourisme allemand — une berline 4 portes qui cache 630 chevaux derrière des lignes de coupé. J'ai cherché à capturer cette dualité : brutalité contenue et raffinement absolu.",
+    quote: 'La perfection allemande se reconnaît au premier regard.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/RS7/',
     images: [
-      'hf_20260501_073254_1fcd0c8b-6958-46a2-9fa3-b204883e026d.png',
-      'hf_20260501_074618_febae747-db8c-4c31-8eca-f08daea168fd.png',
-      'hf_20260501_080354_3a956424-75c8-4259-ad59-35e624a6d1ca.png',
-      'hf_20260501_082428_6da84fb7-968b-4399-93d4-49ca60d97904.png',
-      'hf_20260501_092506_a3e8dfa7-2664-40a5-b3b5-7e28ffc921f2.png'
+      'hf_20260514_204239_b6b36573-4b05-45c9-bedb-38cdb3866635.png',
+      'hf_20260514_204527_a68b32a4-9837-4b10-8ac7-397eb53e6f20.png',
+      'hf_20260514_204642_87bd0aeb-4b77-40b7-bf41-fe1fd06b8201.png',
+      'hf_20260514_205202_53a59963-9345-40d5-ab23-c44dc9f74437.png',
+      'hf_20260514_212100_ef427868-2873-4cb7-82f6-4d5b15f4c0c6.png'
     ],
-    stats: [{n:'5', l:'Visuels'}, {n:'50+', l:'Itérations'}, {n:'3', l:'Outils'}, {n:'2 sem', l:'Production'}]
+    stats: [{n:'5', l:'Visuels'}, {n:'630', l:'Chevaux'}, {n:'RS7', l:'Signature'}, {n:'2026', l:'Année'}]
   },
 
   'peugeot-408': {
@@ -380,51 +380,45 @@ const PROJECTS_DATA = {
     images: [
       'hf_20260504_210049_a5af4e5b-ce0d-4539-ac57-ba88d2f33b77.png',
       'hf_20260504_210806_3adf2be1-c351-4e24-9b58-e710a971eca7.png',
-      'hf_20260504_211627_e3dc62f2-c6c6-4016-a6a3-9d9eab897e02.png',
-      'AR2.png',
-      'f20e3cf0-a30f-4e41-b1b4-3752676c30fe.png',
-      'image-13.webp'
+      'hf_20260504_211627_e3dc62f2-c6c6-4016-a6a3-9d9eab897e02.png'
     ],
-    stats: [{n:'6', l:'Visuels'}, {n:'4', l:'Angles'}, {n:'RS', l:'Signature'}, {n:'2026', l:'Année'}]
+    stats: [{n:'3', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'SUV', l:'Format'}, {n:'2026', l:'Année'}]
   },
 
-  'ferrari-tokyo': {
-    title: 'Ferrari × <em style="font-style:italic; color:var(--accent);">Tokyo</em>',
-    name: 'Ferrari × Tokyo',
-    eyebrow: 'FERRARI · CINEMATIC',
-    brand: 'Ferrari', category: 'Editorial cinématique', year: '2026',
-    lead: "Cinematic editorial entre néons japonais et carrosserie italienne. Trois visuels qui mêlent Tokyo by night et la mythologie Ferrari.",
-    context: "Tokyo est une scène, Ferrari un acteur. J'ai imaginé une nuit dans Shibuya où le rouge Rosso Corsa dialogue avec les néons — une métaphore du désir et de la vitesse.",
-    quote: 'Une Ferrari à Tokyo, c\'est un poème en trois langues.',
-    folder: './Visuel par page/Projets/Luxe et Automobile/Ferrari & Tokyo/',
+  'vision-alpina-zapa': {
+    title: 'Vision Alpina × <em style="font-style:italic; color:var(--accent);">ZAPA</em>',
+    name: 'Vision Alpina × ZAPA',
+    eyebrow: 'ALPINA · MODE · CROSSOVER',
+    brand: 'Alpina · ZAPA', category: 'Crossover · Luxe · Mode', year: '2026',
+    lead: "Collaboration fictive entre Alpina et la maison de mode ZAPA — 5 visuels alliant automobile premium et mode parisienne.",
+    context: "Alpina incarne l'excellence automobile raffinée, ZAPA la mode parisienne contemporaine. Cette collaboration imaginaire explore le territoire commun entre cuir de sellerie et tissu haute couture, entre carrosserie et vêtement.",
+    quote: 'Le luxe n\'a pas de frontière — il se déplace d\'une marque à l\'autre.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Vision Alpina X ZAPA/',
     images: [
-      'hf_20260413_114027_6b8197be-2c26-481c-95eb-0f10c1fba5f9.png',
-      'hf_20260413_114646_6da5b2c5-3f8c-4cf9-95f8-788e93b66d08.png',
-      'hf_20260413_115005_53be732e-866a-4b34-bd54-e02887d86c9e.png'
+      'hf_20260520_185656_7722fc1c-3c0e-489c-b353-12b5969ef525.png',
+      'hf_20260520_190132_6fc1223d-ba81-46ff-8cc3-76c76963ac50.png',
+      'hf_20260520_194739_0aeaedb8-4a4c-4f3a-a404-787b33f90bbd.png',
+      'hf_20260520_200231_70d8ffdb-c502-4e45-9634-e19e189177fd.png',
+      'hf_20260520_203814_e7c4b6b1-91cb-4a3f-b2a4-694796ac3ce8.png'
     ],
-    stats: [{n:'3', l:'Visuels'}, {n:'1', l:'Ville'}, {n:'1', l:'Marque'}, {n:'2026', l:'Année'}]
+    stats: [{n:'5', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Vision'}, {n:'2026', l:'Année'}]
   },
 
-  'desert-mclaren': {
-    title: 'Desert × <em style="font-style:italic; color:var(--accent);">McLaren</em>',
-    name: 'Desert × McLaren',
-    eyebrow: 'McLAREN · EDITORIAL',
-    brand: 'McLaren', category: 'Editorial · Paysage', year: '2026',
-    lead: "Monolithe technologique dans un paysage minéral. Huit visuels qui placent la supercar dans l'immensité d'un désert silencieux.",
-    context: "Que reste-t-il d'une supercar coupée du circuit ? L'objet pur, la sculpture, l'idée. Le désert sert de page blanche à une méditation visuelle sur le design McLaren.",
-    quote: 'Le silence du désert révèle la mécanique du désir.',
-    folder: './Visuel par page/Projets/Luxe et Automobile/Desert x Maclaren/',
+  'm3-desert': {
+    title: 'M3 <em style="font-style:italic; color:var(--accent);">Desert</em>',
+    name: 'M3 Desert',
+    eyebrow: 'BMW · EDITORIAL',
+    brand: 'BMW', category: 'Editorial · Desert', year: '2026',
+    lead: "BMW M3 en décor désertique — direction artistique cinématographique, 3 visuels entre performance et minéral.",
+    context: "Le désert offre la meilleure scène pour une voiture de performance : pas de circuit, pas de public, juste l'horizon. La BMW M3 y trouve son expression la plus pure — sculpture dans le vide.",
+    quote: 'La performance a besoin d\'espace pour s\'exprimer.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/M3 Desert/',
     images: [
-      'hf_20260409_143518_8e4e0a39-238a-4b50-8be8-b06032400898.png',
-      'hf_20260409_150144_4bdf95bf-21d3-4807-be23-2e16a0e2fa11.png',
-      'hf_20260409_150722_280857e3-3ed4-486b-9e52-cbfca689bbec.png',
-      'hf_20260409_152107_53057f7d-2ca0-453b-8e84-8947f8386ad0.png',
-      'hf_20260409_153157_d3239070-8745-44bc-bbb8-ee255b189f50.png',
-      'hf_20260409_153235_0bb7cb27-842f-4865-a2a6-f1a0450c5a29.png',
-      'hf_20260409_154332_635f2d3d-49fb-4cee-a888-5cd847870057.png',
-      'hf_20260409_171324_2105b144-7491-4881-8d60-370bf81c30a4.png'
+      'hf_20260511_214126_176e8788-bbd6-495e-b869-ab42a37f8ed2.png',
+      'hf_20260511_222205_311df171-3cdd-4934-9000-9a4e5876ffae.png',
+      'hf_20260511_222440_9d4167c3-baea-430b-b58c-d6d91dce1bf5.png'
     ],
-    stats: [{n:'8', l:'Visuels'}, {n:'1', l:'Décor'}, {n:'∞', l:'Espace'}, {n:'2026', l:'Année'}]
+    stats: [{n:'3', l:'Visuels'}, {n:'M3', l:'Signature'}, {n:'Desert', l:'Décor'}, {n:'2026', l:'Année'}]
   },
 
   'peugeot-508': {
@@ -474,12 +468,11 @@ const PROJECTS_DATA = {
     quote: 'Une icône revient toujours quand le public la réclame.',
     folder: './Visuel par page/Projets/RENAULT/Clio 6 RS/',
     images: [
-      'hf_20260429_075128_0b1e0441-18ed-421e-8526-d468e54f92bb.png',
       'hf_20260429_095509_b7062063-6698-4b32-942e-af426a3ac7aa.png',
       'hf_20260429_100026_fb1a13f5-13a4-4104-8d01-a577005300d9.png',
       'hf_20260429_143235_88073418-8cac-4ba5-9f62-54674cd9d1f8.png'
     ],
-    stats: [{n:'4', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'30+', l:'Ans d\'héritage'}, {n:'2026', l:'Année'}]
+    stats: [{n:'3', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'30+', l:'Ans d\'héritage'}, {n:'2026', l:'Année'}]
   },
 
   'tasty-mustang': {
@@ -500,23 +493,22 @@ const PROJECTS_DATA = {
     stats: [{n:'4', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Pub'}, {n:'2026', l:'Année'}]
   },
 
-  'peugeot-308': {
-    title: 'Peugeot 308 <em style="font-style:italic; color:var(--accent);">GT SW</em>',
-    name: 'Peugeot 308 GT SW',
-    eyebrow: 'PEUGEOT · BREAK',
-    brand: 'Peugeot', category: 'Break GT', year: '2026',
-    lead: "Élégance du break GT contemporain. Cinq visuels pour la 308 SW dans sa version la plus haut de gamme.",
-    context: "Le break a longtemps été pensé comme un simple utilitaire. La 308 GT SW prouve qu'il peut être l'expression la plus aboutie du style Peugeot — équilibre, prestance et finition GT.",
-    quote: 'Un break n\'est pas un compromis, c\'est une preuve d\'élégance.',
-    folder: './Visuel par page/Projets/PEUGEOT/308 GT SW/',
+  'm2-cs-psg': {
+    title: 'M2 CS × <em style="font-style:italic; color:var(--accent);">PSG</em>',
+    name: 'M2 CS × PSG',
+    eyebrow: 'BMW · SPORT · CULTURE',
+    brand: 'BMW · Paris Saint-Germain', category: 'Crossover · Sport · Culture', year: '2026',
+    lead: "Collaboration fictive BMW M2 CS × Paris Saint-Germain — 4 visuels entre piste et stade, performance et culture.",
+    context: "BMW et le PSG partagent l'exigence de la performance et le soin du détail. Cette collaboration imaginaire réunit deux icônes du sport dans une série visuelle qui joue avec les codes des deux univers — bleu, rouge et or.",
+    quote: 'La performance est un langage universel.',
+    folder: './Visuel par page/Projets/M2 CS PSG/',
     images: [
-      'hf_20260428_100412_03668f22-cb74-41ef-bdac-bbaa06b75443.png',
-      'hf_20260428_102350_d1d7054f-5a28-48b0-a04a-57511a6c72c6.png',
-      'hf_20260428_114515_a6aa98c0-84da-4b52-8ffc-cbe1b963cef2.png',
-      'hf_20260428_120321_a180710f-6472-4c7e-85ff-8f122af48fb9.png',
-      'hf_20260428_134043_c0c08c44-b8ef-46d3-894b-bfdca22de6b2.png'
+      'hf_20260510_192400_d4887262-ec92-4f40-9ede-f5e211feb6ab.png',
+      'hf_20260510_194800_f6b52918-0db9-4633-b291-7dfaf2eed2bc.png',
+      'hf_20260510_195812_fc9d5018-cd4f-4260-9017-cbecf80cf6fd.png',
+      'hf_20260510_200612_c89d8055-755b-4d73-8f41-b046d3ed73c8.png'
     ],
-    stats: [{n:'5', l:'Visuels'}, {n:'GT', l:'Finition'}, {n:'SW', l:'Format'}, {n:'2026', l:'Année'}]
+    stats: [{n:'4', l:'Visuels'}, {n:'M2 CS', l:'Performance'}, {n:'PSG', l:'Culture'}, {n:'2026', l:'Année'}]
   },
 
   'twingo-alpine': {
@@ -585,7 +577,7 @@ const SLUGS = Object.keys(PROJECTS_DATA);
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('p');
-  return PROJECTS_DATA[slug] ? slug : 'audi-r8';
+  return PROJECTS_DATA[slug] ? slug : 'audi-rs7';
 }
 
 function buildMedia(folder, item, opts = {}) {
