@@ -35,9 +35,5 @@ dist/
 *.bak
 *.backup
 
-# === Médias volumineux — push séparé plus tard ===
-# Les images/vidéos seront uploadées dans un second temps
-Visuel par page/
-
-# === PDFs — copies déposées séparément ===
-*.pdf
+# === Médias & PDFs — inclus dans le repo pour déploiement Netlify ===
+# (Visuel par page/ et *.pdf sont maintenant trackés)
