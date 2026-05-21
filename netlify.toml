@@ -1,0 +1,97 @@
+# ============================================
+# Configuration Netlify — Portfolio Aurélien POTOLA
+# ============================================
+
+[build]
+  # Site statique pur — pas de build nécessaire
+  publish = "."
+  command = ""
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# === Headers de sécurité ===
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # HSTS — force HTTPS pendant 1 an
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Anti-clickjacking
+    X-Frame-Options = "DENY"
+    # Anti MIME sniffing
+    X-Content-Type-Options = "nosniff"
+    # Référence partielle
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # APIs bloquées
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()"
+    # CSP — Content Security Policy stricte
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    # Cross-Origin Policies
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    # Legacy XSS Protection
+    X-XSS-Protection = "1; mode=block"
+
+# === Cache long pour assets statiques ===
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/Visuel par page/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# === Cache court pour HTML ===
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# === PDF avec téléchargement forcé ===
+[[headers]]
+  for = "/*.pdf"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# === Redirections ===
+[[redirects]]
+  from = "/cv"
+  to = "/cv.html"
+  status = 301
+
+[[redirects]]
+  from = "/projets"
+  to = "/projects.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 301
+
+# Page 404 — fallback vers accueil
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+# === Optimisation images (Netlify Image CDN) ===
+[images]
+  remote_images = []

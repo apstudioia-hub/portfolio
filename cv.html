@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0e0d0a">
+  <meta name="color-scheme" content="dark light">
+  <title>CV — Aurélien POTOLA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,100..900,0..100;1,9..144,100..900,0..100&family=Inter+Tight:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<canvas id="bg-3d" aria-hidden="true"></canvas>
+<div class="curtain"><span class="curtain-text">CV</span></div>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Aurélien<span class="dot">.</span><span class="num">— 2026</span></a>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+        <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+        <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+        <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+        <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+        <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <button class="icon-btn theme-toggle" aria-label="Basculer thème"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+      <button class="icon-btn lang-toggle" aria-label="Changer la langue"><span class="lang-label">EN</span></button>
+      <button class="icon-btn menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== INTRO ===== -->
+<section style="padding-top: 160px;">
+  <div class="container">
+    <p class="eyebrow reveal" data-i18n="cv.eyebrow">Curriculum Vitae</p>
+    <h1 class="reveal" data-i18n="cv.title">Mon <span class="gradient-text">CV</span> en un coup d'œil.</h1>
+    <p class="lead reveal" style="margin-top: var(--s-3);" data-i18n="cv.lead">Téléchargeable en PDF (CV ATS + Portfolio Pro), ou consultable directement ci-dessous.</p>
+    <div class="btn-group reveal" style="margin-top: var(--s-4);">
+      <a href="CV_Aurelien_POTOLA.pdf" class="btn btn-primary" target="_blank" rel="noopener" download>📄 Télécharger le CV (PDF)</a>
+      <a href="Portfolio_Aurelien_POTOLA.pdf" class="btn btn-ghost" target="_blank" rel="noopener" download>📁 Télécharger le Portfolio Pro</a>
+      <a href="contact.html" class="btn btn-ghost" data-i18n="cta.contact">Me contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CV VIDÉO ===== -->
+<section style="padding-top: 0; padding-bottom: var(--s-5);">
+  <div class="container" style="max-width:960px;">
+    <p class="eyebrow reveal" style="margin-bottom: var(--s-2);">Format vidéo</p>
+    <div class="reveal" style="display:grid; grid-template-columns: 1fr 1.4fr; gap: var(--s-4); align-items:center;">
+      <div style="aspect-ratio:9/16; max-width:380px; border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-card); background:#000; justify-self:center;">
+        <video muted loop playsinline autoplay preload="metadata" controls controlslist="nodownload" style="width:100%; height:100%; object-fit:cover;">
+          <source src="./Visuel par page/À propos/CV vidéo/CV vidéo.mov" type="video/mp4">
+          <source src="./Visuel par page/À propos/CV vidéo/CV vidéo.mov" type="video/quicktime">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </div>
+      <div>
+        <h2 style="margin-bottom: var(--s-3); font-size:clamp(1.5rem,3.5vw,2.5rem);">Découvrez-moi en <em style="font-style:italic; color:var(--accent);">vidéo</em>.</h2>
+        <p style="color:var(--ink-soft); line-height:1.7; margin-bottom: var(--s-3);">Une présentation courte au format Reels — qui je suis, mon parcours et ce que je peux apporter à votre équipe en moins de 60 secondes.</p>
+        <p style="color:var(--ink-mute); font-family:var(--f-mono); font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase;">🔊 Activez le son via les contrôles · ⏯ Cliquez pour mettre en pause</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CV CONTENU ===== -->
+<section style="padding-top: 0;">
+  <div class="container" style="max-width:960px;">
+
+    <!-- En-tête CV -->
+    <div class="card reveal" style="padding: var(--s-5); margin-bottom: var(--s-4);">
+      <div style="border-bottom: 1px solid var(--line); padding-bottom: var(--s-3); margin-bottom: var(--s-3);">
+        <h2 style="font-size: clamp(2rem,5vw,3.5rem);">Aurélien POTOLA</h2>
+        <p style="color:var(--ink-soft); margin-top:0.4rem; font-size:1.1rem;">Assistant Visual Merchandising & Graphiste · Étudiant Bachelor TC</p>
+        <p style="color:var(--ink-mute); font-size:0.9rem; margin-top:0.5rem; font-family: var(--f-mono); word-break:break-word;">📧 potola.aurelien974@gmail.com · 📍 Île de la Réunion · 🔗 LinkedIn : Aurélien POTOLA</p>
+      </div>
+
+      <!-- Profil -->
+      <div style="margin-bottom: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-2); font-size:1.4rem;">👤 Profil</h3>
+        <p style="color:var(--ink-soft); line-height:1.7;">Étudiant dynamique et motivé en Bachelor Techniques de Commercialisation, je recherche une alternance en Master Marketing. Créatif et passionné par le commerce et la communication visuelle, je souhaite développer mes compétences tout en contribuant efficacement aux projets de votre entreprise.</p>
+      </div>
+
+      <!-- Formation -->
+      <div style="border-top: 1px solid var(--line); padding-top: var(--s-4); margin-bottom: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-3); font-size:1.4rem;" data-i18n="cv.formation">🎓 Formation</h3>
+        <div class="timeline-edit">
+          <div class="timeline-row" style="padding-bottom: var(--s-3);">
+            <div class="timeline-year" style="font-size:1.1rem;">2023 —<br>2026</div>
+            <div class="timeline-body">
+              <h3 style="font-size:1rem;">Bachelor Techniques de Commercialisation</h3>
+              <p class="place">IUT de la Réunion · Université de la Réunion</p>
+              <p style="font-size:0.92rem;">Parcours Marketing et Management du Point de Vente</p>
+            </div>
+          </div>
+          <div class="timeline-row" style="padding-bottom:0; border-bottom:none;">
+            <div class="timeline-year" style="font-size:1.1rem;">2023</div>
+            <div class="timeline-body">
+              <h3 style="font-size:1rem;">Baccalauréat STMG Mercatique — Mention Bien</h3>
+              <p class="place">Lycée Privé La Salle Maison Blanche · Saint-Paul</p>
+              <p style="font-size:0.92rem;">Bénévolat pour l'association Akamasoa du Père Pedro (Madagascar)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expérience -->
+      <div style="border-top: 1px solid var(--line); padding-top: var(--s-4); margin-bottom: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-3); font-size:1.4rem;" data-i18n="cv.work">💼 Expérience professionnelle</h3>
+        <div class="timeline-edit">
+          <div class="timeline-row" style="padding-bottom: var(--s-3);">
+            <div class="timeline-year" style="font-size:1.1rem;">2025 —<br>Présent</div>
+            <div class="timeline-body">
+              <h3 style="font-size:1rem;">Créateur Visuel IA & Graphiste — AP.StudioIA</h3>
+              <p class="place">Projet personnel</p>
+              <p style="font-size:0.92rem;">Concepts visuels luxe & automobile · Direction artistique · Storytelling</p>
+            </div>
+          </div>
+          <div class="timeline-row" style="padding-bottom: var(--s-3);">
+            <div class="timeline-year" style="font-size:1.1rem;">Mars —<br>Mai 2026</div>
+            <div class="timeline-body">
+              <h3 style="font-size:1rem;">Assistant Visual Merchandising — ZAPA Paris</h3>
+              <p class="place">Paris · Stage 3 mois</p>
+              <p style="font-size:0.92rem;">Guidelines vitrines & merchandising · Supports vidéo IA · Showroom</p>
+            </div>
+          </div>
+          <div class="timeline-row" style="padding-bottom:0; border-bottom:none;">
+            <div class="timeline-year" style="font-size:1.1rem;">2025</div>
+            <div class="timeline-body">
+              <h3 style="font-size:1rem;">Chargé de communication & vendeur — LE KORNER</h3>
+              <p class="place">Saint-Paul · Lacoste, EdenPark, Pierre Cardin · Stage 8 sem. + 2 mois</p>
+              <p style="font-size:0.92rem;">Communication digitale · Charte graphique · Vitrines · Vente prêt-à-porter haut de gamme</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compétences clés -->
+      <div style="border-top: 1px solid var(--line); padding-top: var(--s-4); margin-bottom: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-2); font-size:1.4rem;" data-i18n="cv.skills">⚙️ Compétences clés</h3>
+        <div style="display:flex; flex-direction:column; gap:0.8rem; color:var(--ink-soft);">
+          <p><strong style="color:var(--ink);">Hard Skills :</strong> Communication, Montage vidéo & photo, Gestion de projet audiovisuel, Conseil & gestion clientèle, Techniques de vente, Négociation</p>
+          <p><strong style="color:var(--ink);">Logiciels :</strong> Photoshop, Kling AI / Higgfields, ChatGPT / Claude, HubSpot, Excel / Word</p>
+          <p><strong style="color:var(--ink);">Certifications :</strong> Canva (certifié), TOEIC</p>
+        </div>
+      </div>
+
+      <!-- Langues -->
+      <div style="border-top: 1px solid var(--line); padding-top: var(--s-4); margin-bottom: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-2); font-size:1.4rem;" data-i18n="cv.languages">🌐 Langues</h3>
+        <p style="color:var(--ink-soft);">Français (natif) · Anglais (TOEIC certifié) · Espagnol (bonnes notions)</p>
+      </div>
+
+      <!-- Centres d'intérêt -->
+      <div style="border-top: 1px solid var(--line); padding-top: var(--s-4);">
+        <h3 style="margin-bottom: var(--s-2); font-size:1.4rem;" data-i18n="cv.interests">🎯 Centres d'intérêt</h3>
+        <div class="tag-list">
+          <span>Automobile</span><span>Sport</span><span>Création de contenu</span><span>Vidéos & visuels</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA download cards -->
+    <div class="grid grid-2 stagger reveal" style="margin-top: var(--s-5);">
+      <a href="CV_Aurelien_POTOLA.pdf" target="_blank" rel="noopener" download class="card" style="display:flex; align-items:center; gap: var(--s-3); text-decoration:none;">
+        <div style="font-size:2.5rem;">📄</div>
+        <div style="flex:1;">
+          <h3 style="font-size:1.1rem;">CV — Format ATS</h3>
+          <p style="color:var(--ink-soft); margin-top:0.3rem; font-size:0.9rem;">Compatible recruteurs · PDF</p>
+        </div>
+        <span style="color:var(--accent); font-family:var(--f-mono); font-size:0.85rem;">↓</span>
+      </a>
+      <a href="Portfolio_Aurelien_POTOLA.pdf" target="_blank" rel="noopener" download class="card" style="display:flex; align-items:center; gap: var(--s-3); text-decoration:none;">
+        <div style="font-size:2.5rem;">📁</div>
+        <div style="flex:1;">
+          <h3 style="font-size:1.1rem;">Portfolio Pro</h3>
+          <p style="color:var(--ink-soft); margin-top:0.3rem; font-size:0.9rem;">Réalisations détaillées · PDF</p>
+        </div>
+        <span style="color:var(--accent); font-family:var(--f-mono); font-size:0.85rem;">↓</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <p class="huge-foot">CV.</p>
+    <div class="footer-grid">
+      <div>
+        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Visual Merchandising & Création IA. Disponible pour une alternance Master Marketing.</p>
+        <div style="margin-top: var(--s-3);">
+          <a href="contact.html" class="btn btn-primary" style="font-size:0.85rem;padding:0.75rem 1.4rem;" data-i18n="cta.contactArrow">Me contacter →</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+          <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+          <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+          <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul>
+          <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+          <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Réseaux</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/aurélien-potola-5750232b1" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ap.studio.974?igsh=a29wNXZza290OWJy&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@ap.studio974?_r=1&_t=ZN-966sohOCoP0" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="mailto:potola.aurelien974@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© 2026 Aurélien POTOLA — Tous droits réservés.</span>
+      <span>Île de la Réunion 🇷🇪</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/bg-3d.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# ============================================
+# .gitignore — Portfolio Aurélien POTOLA
+# ============================================
+
+# === macOS ===
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# === Éditeurs ===
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+
+# === Sensibles (NE JAMAIS COMMIT) ===
+.env
+.env.local
+.env.production
+*.log
+*.key
+*.pem
+.netrc
+
+# === Build ===
+node_modules/
+dist/
+.cache/
+.next/
+
+# === Backups ===
+*.bak
+*.backup
+
+# === Médias volumineux — push séparé plus tard ===
+# Les images/vidéos seront uploadées dans un second temps
+Visuel par page/
+
+# === PDFs — copies déposées séparément ===
+*.pdf

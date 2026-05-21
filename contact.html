@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0e0d0a">
+  <meta name="color-scheme" content="dark light">
+  <title>Contact — Aurélien POTOLA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,100..900,0..100;1,9..144,100..900,0..100&family=Inter+Tight:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<canvas id="bg-3d" aria-hidden="true"></canvas>
+<div class="curtain"><span class="curtain-text">Contact</span></div>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Aurélien<span class="dot">.</span><span class="num">— 2026</span></a>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+        <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+        <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+        <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+        <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+        <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <button class="icon-btn theme-toggle" aria-label="Basculer thème"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+      <button class="icon-btn lang-toggle" aria-label="Changer la langue"><span class="lang-label">EN</span></button>
+      <button class="icon-btn menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== INTRO ===== -->
+<section style="padding-top: 160px;">
+  <div class="container">
+    <p class="eyebrow reveal" data-i18n="contact.eyebrow">On discute ?</p>
+    <h1 class="reveal" data-i18n="contact.title">Prenons <span class="gradient-text">contact</span>.</h1>
+    <p class="lead reveal" style="margin-top: var(--s-3);" data-i18n="contact.lead">Une opportunité d'alternance, une collaboration créative, ou simplement envie d'échanger ? Je réponds en moins de 48h.</p>
+  </div>
+</section>
+
+<!-- ===== FORMULAIRE + INFOS ===== -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="grid-asymmetric">
+
+      <!-- Formulaire — sécurisé (validation + honeypot anti-spam) -->
+      <div class="reveal">
+        <form id="contact-form" action="mailto:potola.aurelien974@gmail.com" method="post" enctype="text/plain" novalidate>
+          <!-- Honeypot anti-bot : invisible aux humains, rempli par les robots -->
+          <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+            <label for="website-url">Ne remplissez pas ce champ</label>
+            <input type="text" id="website-url" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="name" data-i18n="contact.fName">Votre nom</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Doe"
+                   autocomplete="name" maxlength="80" minlength="2"
+                   pattern="[A-Za-zÀ-ÿ\s\-']{2,80}"
+                   title="2 à 80 caractères, lettres, espaces, tirets et apostrophes">
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="contact.fEmail">Votre email</label>
+            <input type="email" id="email" name="email" required placeholder="jane@example.com"
+                   autocomplete="email" maxlength="120"
+                   pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                   title="Adresse email valide">
+          </div>
+          <div class="form-group">
+            <label for="subject" data-i18n="contact.fSubject">Sujet</label>
+            <input type="text" id="subject" name="subject" required placeholder="Proposition d'alternance Master Marketing"
+                   maxlength="120" minlength="3">
+          </div>
+          <div class="form-group">
+            <label for="message" data-i18n="contact.fMessage">Votre message</label>
+            <textarea id="message" name="message" rows="7" required placeholder="Bonjour Aurélien, ..."
+                      maxlength="2000" minlength="10"></textarea>
+            <p style="font-family:var(--f-mono); font-size:0.65rem; color:var(--ink-mute); letter-spacing:0.1em; margin-top:0.4rem;">
+              <span id="char-count">0</span> / 2000 caractères
+            </p>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-i18n="contact.send">Envoyer le message →</button>
+          <p style="font-family:var(--f-mono); font-size:0.65rem; color:var(--ink-mute); letter-spacing:0.12em; text-align:center; margin-top: var(--s-2);">
+            🔒 Aucune donnée n'est stockée — votre message est envoyé directement par email.
+          </p>
+        </form>
+      </div>
+
+      <!-- Infos contact -->
+      <div class="reveal" style="display:flex; flex-direction:column; gap: var(--s-3);">
+
+        <a href="mailto:potola.aurelien974@gmail.com" class="card" style="text-decoration:none; display:block;">
+          <p class="eyebrow no-line" style="margin-bottom:0.6rem;" data-i18n="contact.email">Email</p>
+          <p style="font-size:1.05rem; font-family:var(--f-display); font-style:italic; color:var(--ink); word-break:break-word;">potola.aurelien974@gmail.com</p>
+        </a>
+
+        <div class="card">
+          <p class="eyebrow no-line" style="margin-bottom:0.6rem;" data-i18n="contact.locTitle">Localisation</p>
+          <p style="font-size:1.1rem; font-family:var(--f-display); font-style:italic;" data-i18n="contact.locVal">Île de la Réunion 🇷🇪 — Mobile France</p>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow no-line" style="margin-bottom:0.6rem;">Disponibilité</p>
+          <p style="font-size:1.1rem; font-family:var(--f-display); font-style:italic; color:var(--accent);">Alternance Master Marketing 2026</p>
+        </div>
+
+        <div class="card">
+          <p class="eyebrow no-line" style="margin-bottom: var(--s-2);" data-i18n="contact.networks">Réseaux</p>
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <a href="https://www.linkedin.com/in/aurélien-potola-5750232b1" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; justify-content:space-between; color:var(--ink-soft); transition: color 0.2s, transform 0.2s;">
+              <span>LinkedIn</span><span style="color:var(--accent);">→</span>
+            </a>
+            <a href="https://www.instagram.com/ap.studio.974?igsh=a29wNXZza290OWJy&utm_source=qr" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; justify-content:space-between; color:var(--ink-soft); transition: color 0.2s, transform 0.2s;">
+              <span>Instagram — @ap.studio.974</span><span style="color:var(--accent);">→</span>
+            </a>
+            <a href="https://www.tiktok.com/@ap.studio974?_r=1&_t=ZN-966sohOCoP0" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; justify-content:space-between; color:var(--ink-soft); transition: color 0.2s, transform 0.2s;">
+              <span>TikTok — @ap.studio974</span><span style="color:var(--accent);">→</span>
+            </a>
+            <a href="mailto:ap.studioia@gmail.com" style="display:flex; align-items:center; justify-content:space-between; color:var(--ink-soft); transition: color 0.2s, transform 0.2s;">
+              <span>Studio — ap.studioia@gmail.com</span><span style="color:var(--accent);">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <p class="huge-foot">Contact.</p>
+    <div class="footer-grid">
+      <div>
+        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Visual Merchandising & Création IA. Disponible pour une alternance Master Marketing.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+          <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+          <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+          <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul>
+          <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+          <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Réseaux</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/aurélien-potola-5750232b1" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ap.studio.974?igsh=a29wNXZza290OWJy&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@ap.studio974?_r=1&_t=ZN-966sohOCoP0" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="mailto:potola.aurelien974@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.thanks">© 2026 Aurélien POTOLA — Merci de votre visite.</span>
+      <span>Île de la Réunion 🇷🇪</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/bg-3d.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

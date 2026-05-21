@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0e0d0a">
+  <meta name="color-scheme" content="dark light">
+  <title>Étude de cas — Aurélien POTOLA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,100..900,0..100;1,9..144,100..900,0..100&family=Inter+Tight:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .pd-hero {
+      aspect-ratio: 16/9;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: #000;
+    }
+    .pd-hero img, .pd-hero video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    /* Hero containing a video gets a 9:16-friendly aspect on smaller screens */
+    .pd-hero.is-vertical { aspect-ratio: 9/16; max-width: 480px; margin: 0 auto; }
+    .pd-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--s-2);
+    }
+    .pd-gallery .item {
+      aspect-ratio: 4/3;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      cursor: zoom-in;
+      transition: transform 0.5s var(--ease);
+      background: #000;
+      position: relative;
+    }
+    .pd-gallery .item:hover { transform: scale(1.02); }
+    .pd-gallery .item.has-video { aspect-ratio: 9/16; cursor: default; }
+    .pd-gallery img, .pd-gallery video {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.9s var(--ease);
+    }
+    .pd-gallery .item:hover img { transform: scale(1.06); }
+    .pd-gallery .item.has-video video { transition: none; }
+    /* "Open in lightbox" hint for image items */
+    .pd-gallery .item:not(.has-video)::after {
+      content: '⤢';
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      width: 32px; height: 32px; border-radius: 999px;
+      background: rgba(0,0,0,0.5); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s var(--ease);
+      font-size: 0.9rem;
+    }
+    .pd-gallery .item:not(.has-video):hover::after { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: var(--s-3);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img, .lightbox video {
+      max-width: 92vw; max-height: 92vh;
+      border-radius: var(--r-md);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox .close {
+      position: absolute; top: var(--s-3); right: var(--s-3);
+      width: 44px; height: 44px; border-radius: 999px;
+      background: rgba(255,255,255,0.1); color: #fff;
+      border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+      font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox .close:hover { background: rgba(255,255,255,0.2); }
+
+    .pd-prev-next {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--s-3);
+      padding-top: var(--s-5);
+      border-top: 1px solid var(--line);
+    }
+    .pd-nav-link {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      padding: var(--s-3); border-radius: var(--r-lg);
+      background: var(--paper); transition: var(--t);
+      border: 1px solid var(--line);
+    }
+    .pd-nav-link:hover {
+      border-color: var(--line-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+    .pd-nav-link.next { text-align: right; }
+    .pd-nav-link .label {
+      font-family: var(--f-mono); font-size: 0.7rem;
+      color: var(--ink-mute); letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .pd-nav-link .title {
+      font-family: var(--f-display); font-style: italic;
+      font-size: 1.3rem; color: var(--ink);
+    }
+    @media (max-width: 768px) {
+      .pd-prev-next { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-3d" aria-hidden="true"></canvas>
+<div class="curtain"><span class="curtain-text" id="curtain-name">Projet</span></div>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Aurélien<span class="dot">.</span><span class="num">— 2026</span></a>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+        <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+        <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+        <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+        <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+        <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <button class="icon-btn theme-toggle" aria-label="Basculer thème"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+      <button class="icon-btn lang-toggle" aria-label="Changer la langue"><span class="lang-label">EN</span></button>
+      <button class="icon-btn menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== INTRO ===== -->
+<section style="padding-top: 160px;">
+  <div class="container" style="max-width:1080px;">
+    <a href="projects.html" style="font-family:var(--f-mono); font-size:0.78rem; color:var(--ink-mute); letter-spacing:0.15em; text-transform:uppercase;">← Retour aux projets</a>
+
+    <p class="eyebrow reveal" style="margin-top: var(--s-3);" id="pd-eyebrow">AP.StudioIA · Direction artistique</p>
+    <h1 class="reveal" id="pd-title">Projet</h1>
+    <p class="lead reveal" style="margin-top: var(--s-3);" id="pd-lead">…</p>
+
+    <!-- Méta projet -->
+    <div class="hero-meta reveal" style="margin-top: var(--s-5);">
+      <div>
+        <span class="label">Marque</span>
+        <span class="value" id="pd-brand">—</span>
+      </div>
+      <div>
+        <span class="label">Catégorie</span>
+        <span class="value" id="pd-category">—</span>
+      </div>
+      <div>
+        <span class="label">Année</span>
+        <span class="value" id="pd-year">2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HERO VISUEL ===== -->
+<section style="padding-top: 0;">
+  <div class="container" style="max-width:1080px;">
+    <div class="pd-hero reveal" id="pd-hero-media">
+      <!-- inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTEXTE ===== -->
+<section style="padding-top: 0;">
+  <div class="container" style="max-width:1080px;">
+    <div class="grid-asymmetric">
+      <div class="reveal">
+        <h2 style="margin-bottom: var(--s-3);">Le contexte</h2>
+        <p id="pd-context" style="color:var(--ink-soft); line-height:1.8;">…</p>
+      </div>
+      <div class="reveal">
+        <blockquote class="pull-quote" id="pd-quote" style="font-size:clamp(1.3rem,2.2vw,2rem);">
+          …
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section>
+  <div class="container" style="max-width:1080px;">
+    <h2 class="reveal" style="margin-bottom: var(--s-4);">Direction artistique</h2>
+    <div class="timeline-edit reveal" id="pd-process">
+      <!-- inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALERIE ===== -->
+<section>
+  <div class="container" style="max-width:1080px;">
+    <h2 class="reveal" style="margin-bottom: var(--s-4);">La série complète</h2>
+    <div class="pd-gallery reveal" id="pd-gallery">
+      <!-- inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section>
+  <div class="container" style="max-width:1080px;">
+    <h2 class="reveal" style="margin-bottom: var(--s-5);">En chiffres</h2>
+    <div class="stats reveal" id="pd-stats">
+      <!-- inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== NAV PROJETS ===== -->
+<section style="padding-top: 0;">
+  <div class="container" style="max-width:1080px;">
+    <div class="pd-prev-next reveal" id="pd-prev-next">
+      <!-- inserted by JS -->
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); flex-wrap:wrap; gap: var(--s-2);">
+      <a href="projects.html" class="btn btn-ghost">← Tous les projets</a>
+      <a href="contact.html" class="btn btn-primary">Discuter d'un projet →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vue agrandie">
+  <button class="close" id="lightbox-close" aria-label="Fermer">✕</button>
+  <div id="lightbox-content"></div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <p class="huge-foot" id="pd-footer-name">Projet.</p>
+    <div class="footer-grid">
+      <div>
+        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Visual Merchandising & Création IA. Disponible pour une alternance Master Marketing.</p>
+        <div style="margin-top: var(--s-3);">
+          <a href="contact.html" class="btn btn-primary" style="font-size:0.85rem;padding:0.75rem 1.4rem;" data-i18n="cta.contactArrow">Me contacter →</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+          <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+          <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+          <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul>
+          <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+          <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Réseaux</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/aurélien-potola-5750232b1" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ap.studio.974?igsh=a29wNXZza290OWJy&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@ap.studio974?_r=1&_t=ZN-966sohOCoP0" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="mailto:potola.aurelien974@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© 2026 Aurélien POTOLA — Tous droits réservés.</span>
+      <span>Île de la Réunion 🇷🇪</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== DATA + DYNAMIC LOGIC ===== -->
+<script>
+const PROJECTS_DATA = {
+  'audi-r8': {
+    title: 'R8 — <em style="font-style:italic; color:var(--accent);">2026 Concept</em>',
+    name: 'Audi R8',
+    eyebrow: 'AUDI · CONCEPT CARS',
+    brand: 'Audi',
+    category: 'Concept Cars',
+    year: '2026',
+    lead: "Réinterprétation contemporaine de l'icône supercar allemande. Une série visuelle entre lumière clinique, surfaces métalliques et héritage Quattro.",
+    context: "L'Audi R8 est une icône — et après son retrait du catalogue, j'ai imaginé sa renaissance. Le défi : conserver l'ADN supercar tout en projetant la marque dans une esthétique 2026, plus minérale et plus sculpturale.",
+    quote: 'Une supercar n\'est pas qu\'une voiture, c\'est une déclaration de design.',
+    folder: './Visuel par page/Projets/AUDI/R8 2026 Concept/',
+    images: [
+      'hf_20260501_073254_1fcd0c8b-6958-46a2-9fa3-b204883e026d.png',
+      'hf_20260501_074618_febae747-db8c-4c31-8eca-f08daea168fd.png',
+      'hf_20260501_080354_3a956424-75c8-4259-ad59-35e624a6d1ca.png',
+      'hf_20260501_082428_6da84fb7-968b-4399-93d4-49ca60d97904.png',
+      'hf_20260501_092506_a3e8dfa7-2664-40a5-b3b5-7e28ffc921f2.png'
+    ],
+    stats: [{n:'5', l:'Visuels'}, {n:'50+', l:'Itérations'}, {n:'3', l:'Outils'}, {n:'2 sem', l:'Production'}]
+  },
+
+  'peugeot-408': {
+    title: 'Peugeot <em style="font-style:italic; color:var(--accent);">408</em>',
+    name: 'Peugeot 408',
+    eyebrow: 'PEUGEOT · STUDIO',
+    brand: 'Peugeot', category: 'Berline', year: '2026',
+    lead: "Direction artistique pour la Peugeot 408 — présentation produit en quatre angles signature et un rendu studio premium.",
+    context: "La 408 incarne la nouvelle direction stylistique de Peugeot. J'ai souhaité capturer ses lignes felines avec une lumière contrôlée et une mise en scène minimaliste qui valorise le galbe de la carrosserie.",
+    quote: 'La beauté du design se révèle dans la précision de la lumière.',
+    folder: './Visuel par page/Projets/PEUGEOT/408/',
+    images: ['Design sans titre-4.jpg','AV1.png','AV2.png','AR1.png','AE2.png'],
+    stats: [{n:'5', l:'Visuels'}, {n:'4', l:'Angles'}, {n:'1', l:'Studio'}, {n:'2026', l:'Année'}]
+  },
+
+  'tiffany': {
+    title: 'Tiffany — <em style="font-style:italic; color:var(--accent);">Eternal Blue</em>',
+    name: 'Tiffany',
+    eyebrow: 'TIFFANY · EDITORIAL LUXE',
+    brand: 'Tiffany', category: 'Luxe · Editorial', year: '2026',
+    lead: "Univers joaillerie premium et haute couture. Six visuels et une vidéo qui jouent du Tiffany Blue iconique, du diamant et de la sensualité du verre.",
+    context: "Tiffany est une marque-monument du luxe américain. J'ai exploré comment incarner l'éternité du bijou par la lumière, la matière et la silhouette féminine — sans jamais montrer le produit frontal.",
+    quote: 'Le luxe, c\'est suggérer plutôt qu\'imposer.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Tiffany/',
+    hero: 'hf_20260417_215257_b74430d7-a3ea-42d9-8ebe-fc54a413e846.png',
+    images: [
+      'hf_20260417_211554_57d95dd2-efdc-4c6e-8eff-c05c87871d29.png',
+      'hf_20260417_212048_88bc001c-5bb8-49e9-8d1c-f47c04a1fa78.png',
+      'hf_20260417_212108_6030f6b8-2d88-4075-8fb2-400593a83c4b.png',
+      'hf_20260417_215257_b74430d7-a3ea-42d9-8ebe-fc54a413e846.png',
+      'hf_20260417_220643_fddceb6e-5266-4fe8-8de1-db3687af5b53.png',
+      { type: 'video', src: 'hf_20260418_071553_2659149e-f36a-4620-9b8c-b9de0a1c911a.mp4' }
+    ],
+    stats: [{n:'5', l:'Visuels'}, {n:'1', l:'Vidéo'}, {n:'1', l:'Marque iconique'}, {n:'2026', l:'Année'}]
+  },
+
+  'mclaren-bottega': {
+    title: 'McLaren × <em style="font-style:italic; color:var(--accent);">Bottega Veneta</em>',
+    name: 'McLaren × Bottega',
+    eyebrow: 'CROSSOVER · MODE',
+    brand: 'McLaren · Bottega Veneta', category: 'Crossover · Luxe', year: '2026',
+    lead: "Fusion mode-automobile : la légèreté britannique de McLaren rencontre l'élégance milanaise du cuir Intrecciato.",
+    context: "Imaginer une supercar habillée du savoir-faire d'une maison de mode, c'est interroger les frontières du luxe. Une collaboration imaginaire mais cohérente, qui met en valeur la matière et la signature des deux marques.",
+    quote: 'Le luxe ne fusionne pas, il dialogue.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Maclaren X Bottega Venetta/',
+    images: [
+      'hf_20260418_193954_b256e6f1-c0e0-4ced-a592-8a9ee710ab80.png',
+      'hf_20260418_200250_fcfc57e3-6538-4e84-9bdf-b7f19b5a41f8.png',
+      'hf_20260418_202639_32707933-8464-4d17-8114-a964623bc2c6.png',
+      'hf_20260418_204833_f5a50b84-00fa-4119-b87e-8ba890cb013e.png'
+    ],
+    stats: [{n:'4', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Vision'}, {n:'2026', l:'Année'}]
+  },
+
+  'renault-rafale': {
+    title: 'Rafale <em style="font-style:italic; color:var(--accent);">RS</em>',
+    name: 'Rafale RS',
+    eyebrow: 'RENAULT · SPORT',
+    brand: 'Renault', category: 'SUV Coupé Sport', year: '2026',
+    lead: "SUV coupé sportif, signature Alpine. Six visuels qui explorent le caractère affirmé du nouveau fer de lance Renault.",
+    context: "La Rafale incarne l'aboutissement de la nouvelle stratégie Renault — un SUV-coupé qui se veut prestige sans se renier. J'ai accentué la posture athlétique et la signature lumineuse pour révéler son intention sportive.",
+    quote: 'Une voiture sportive doit faire battre le cœur avant de tourner la clé.',
+    folder: './Visuel par page/Projets/RENAULT/Rafale RS/',
+    hero: 'hf_20260504_210049_a5af4e5b-ce0d-4539-ac57-ba88d2f33b77.png',
+    images: [
+      'hf_20260504_210049_a5af4e5b-ce0d-4539-ac57-ba88d2f33b77.png',
+      'hf_20260504_210806_3adf2be1-c351-4e24-9b58-e710a971eca7.png',
+      'hf_20260504_211627_e3dc62f2-c6c6-4016-a6a3-9d9eab897e02.png',
+      'AR2.png',
+      'f20e3cf0-a30f-4e41-b1b4-3752676c30fe.png',
+      'image-13.webp'
+    ],
+    stats: [{n:'6', l:'Visuels'}, {n:'4', l:'Angles'}, {n:'RS', l:'Signature'}, {n:'2026', l:'Année'}]
+  },
+
+  'ferrari-tokyo': {
+    title: 'Ferrari × <em style="font-style:italic; color:var(--accent);">Tokyo</em>',
+    name: 'Ferrari × Tokyo',
+    eyebrow: 'FERRARI · CINEMATIC',
+    brand: 'Ferrari', category: 'Editorial cinématique', year: '2026',
+    lead: "Cinematic editorial entre néons japonais et carrosserie italienne. Trois visuels qui mêlent Tokyo by night et la mythologie Ferrari.",
+    context: "Tokyo est une scène, Ferrari un acteur. J'ai imaginé une nuit dans Shibuya où le rouge Rosso Corsa dialogue avec les néons — une métaphore du désir et de la vitesse.",
+    quote: 'Une Ferrari à Tokyo, c\'est un poème en trois langues.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Ferrari & Tokyo/',
+    images: [
+      'hf_20260413_114027_6b8197be-2c26-481c-95eb-0f10c1fba5f9.png',
+      'hf_20260413_114646_6da5b2c5-3f8c-4cf9-95f8-788e93b66d08.png',
+      'hf_20260413_115005_53be732e-866a-4b34-bd54-e02887d86c9e.png'
+    ],
+    stats: [{n:'3', l:'Visuels'}, {n:'1', l:'Ville'}, {n:'1', l:'Marque'}, {n:'2026', l:'Année'}]
+  },
+
+  'desert-mclaren': {
+    title: 'Desert × <em style="font-style:italic; color:var(--accent);">McLaren</em>',
+    name: 'Desert × McLaren',
+    eyebrow: 'McLAREN · EDITORIAL',
+    brand: 'McLaren', category: 'Editorial · Paysage', year: '2026',
+    lead: "Monolithe technologique dans un paysage minéral. Huit visuels qui placent la supercar dans l'immensité d'un désert silencieux.",
+    context: "Que reste-t-il d'une supercar coupée du circuit ? L'objet pur, la sculpture, l'idée. Le désert sert de page blanche à une méditation visuelle sur le design McLaren.",
+    quote: 'Le silence du désert révèle la mécanique du désir.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Desert x Maclaren/',
+    images: [
+      'hf_20260409_143518_8e4e0a39-238a-4b50-8be8-b06032400898.png',
+      'hf_20260409_150144_4bdf95bf-21d3-4807-be23-2e16a0e2fa11.png',
+      'hf_20260409_150722_280857e3-3ed4-486b-9e52-cbfca689bbec.png',
+      'hf_20260409_152107_53057f7d-2ca0-453b-8e84-8947f8386ad0.png',
+      'hf_20260409_153157_d3239070-8745-44bc-bbb8-ee255b189f50.png',
+      'hf_20260409_153235_0bb7cb27-842f-4865-a2a6-f1a0450c5a29.png',
+      'hf_20260409_154332_635f2d3d-49fb-4cee-a888-5cd847870057.png',
+      'hf_20260409_171324_2105b144-7491-4881-8d60-370bf81c30a4.png'
+    ],
+    stats: [{n:'8', l:'Visuels'}, {n:'1', l:'Décor'}, {n:'∞', l:'Espace'}, {n:'2026', l:'Année'}]
+  },
+
+  'peugeot-508': {
+    title: 'Peugeot 508 <em style="font-style:italic; color:var(--accent);">PSE</em>',
+    name: 'Peugeot 508 PSE',
+    eyebrow: 'PEUGEOT · SPORT',
+    brand: 'Peugeot', category: 'Sport · Hybride', year: '2026',
+    lead: "Performance et sportivité française. Quatre visuels pour la version la plus radicale de la 508.",
+    context: "La 508 PSE incarne le savoir-faire Peugeot Sport Engineered — un hybride performant qui ne sacrifie ni l'élégance ni la radicalité. J'ai voulu une mise en scène urbaine qui affirme son caractère.",
+    quote: 'La performance n\'a de sens que si elle a du style.',
+    folder: './Visuel par page/Projets/PEUGEOT/508 PSE/',
+    images: [
+      'hf_20260501_193508_7c2e7f60-4567-48b7-957f-e4f8df39bd96.png',
+      'hf_20260502_123106_1df5a0c3-8465-4cdb-9d8d-34fd24a9d95c.jpeg',
+      'hf_20260502_132011_490140a9-058a-4320-86ba-cdee7b5073b3.jpeg',
+      'hf_20260502_140620_ff6d94f8-10ce-4f17-b1c4-6353fa7c1319.jpeg'
+    ],
+    stats: [{n:'4', l:'Visuels'}, {n:'PSE', l:'Signature'}, {n:'1', l:'Marque'}, {n:'2026', l:'Année'}]
+  },
+
+  'alpine-suv': {
+    title: 'Alpine <em style="font-style:italic; color:var(--accent);">SUV</em>',
+    name: 'Alpine SUV',
+    eyebrow: 'ALPINE · CONCEPT',
+    brand: 'Alpine', category: 'Concept · SUV Sportif', year: '2026',
+    lead: "Vision contemporaine du SUV sportif Alpine. Cinq concepts pour imaginer le successeur de l'A110 au format familial.",
+    context: "Alpine doit grandir sans se trahir. J'ai cherché le compromis exact entre l'ADN du roadster A110 et les exigences d'un SUV moderne — proportions tendues, lumière fine, signature bleu Alpine.",
+    quote: 'Croître sans renier, c\'est l\'art des grandes marques.',
+    folder: './Visuel par page/Projets/RENAULT/ALPINE SUV/',
+    images: [
+      'hf_20260429_141718_f1fe7b2e-7160-4732-b9b6-8a1165f1c96c.png',
+      'hf_20260429_142020_c5fbdafa-19f9-420e-9082-16a2a5da3795.png',
+      'hf_20260429_143326_7b437587-1e31-42eb-9d35-cacfefd57976.png',
+      'hf_20260429_144902_2939ce11-a652-4f61-94dd-b87cac4e153d.png',
+      'hf_20260429_145449_f7297f0e-5791-4db7-994e-fc34877958cc.png'
+    ],
+    stats: [{n:'5', l:'Visuels'}, {n:'1', l:'Concept'}, {n:'A110', l:'Héritage'}, {n:'2026', l:'Année'}]
+  },
+
+  'clio-6-rs': {
+    title: 'Clio <em style="font-style:italic; color:var(--accent);">6 RS</em>',
+    name: 'Clio 6 RS',
+    eyebrow: 'RENAULT · HOT HATCH',
+    brand: 'Renault', category: 'Hot Hatch', year: '2026',
+    lead: "Renaissance de l'icône hot hatch française. Quatre visuels pour réimaginer la Clio RS façon nouvelle génération.",
+    context: "La Clio RS est un mythe pour deux générations de passionnés. J'ai voulu retrouver la rage de la Clio II RS dans un langage stylistique 2026 — extensions d'ailes marquées, sortie centrale, accent jaune Sirius.",
+    quote: 'Une icône revient toujours quand le public la réclame.',
+    folder: './Visuel par page/Projets/RENAULT/Clio 6 RS/',
+    images: [
+      'hf_20260429_075128_0b1e0441-18ed-421e-8526-d468e54f92bb.png',
+      'hf_20260429_095509_b7062063-6698-4b32-942e-af426a3ac7aa.png',
+      'hf_20260429_100026_fb1a13f5-13a4-4104-8d01-a577005300d9.png',
+      'hf_20260429_143235_88073418-8cac-4ba5-9f62-54674cd9d1f8.png'
+    ],
+    stats: [{n:'4', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'30+', l:'Ans d\'héritage'}, {n:'2026', l:'Année'}]
+  },
+
+  'tasty-mustang': {
+    title: 'Tasty Crousty × <em style="font-style:italic; color:var(--accent);">Ford Mustang</em>',
+    name: 'Tasty × Mustang',
+    eyebrow: 'CROSSOVER · FOOD',
+    brand: 'Tasty Crousty · Ford', category: 'Crossover · Pub', year: '2026',
+    lead: "Crossover food & muscle car. Quatre visuels publicitaires qui marient une marque de snacking à l'icône américaine.",
+    context: "Imaginer une campagne pub qui fusionne le rouge d'un emballage food et le gris métallisé d'une Mustang : un exercice ludique sur l'identité de marque et la transversalité du désir.",
+    quote: 'Le mariage le plus surprenant donne souvent les meilleurs résultats.',
+    folder: './Visuel par page/Projets/Luxe et Automobile/Tasty Crousty x ford mustang/',
+    images: [
+      'hf_20260427_142525_0021c700-e72c-4588-9939-5cf9980554ee.png',
+      'hf_20260427_144345_15bc75ce-59a8-45cd-99b8-c074f6d691aa.png',
+      'hf_20260427_151346_4494b336-351c-4a48-a1c7-6e57d74dae71.png',
+      'hf_20260427_152206_65a4dd85-f9e3-4a79-afb2-100a8b2c8490.png'
+    ],
+    stats: [{n:'4', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Pub'}, {n:'2026', l:'Année'}]
+  },
+
+  'peugeot-308': {
+    title: 'Peugeot 308 <em style="font-style:italic; color:var(--accent);">GT SW</em>',
+    name: 'Peugeot 308 GT SW',
+    eyebrow: 'PEUGEOT · BREAK',
+    brand: 'Peugeot', category: 'Break GT', year: '2026',
+    lead: "Élégance du break GT contemporain. Cinq visuels pour la 308 SW dans sa version la plus haut de gamme.",
+    context: "Le break a longtemps été pensé comme un simple utilitaire. La 308 GT SW prouve qu'il peut être l'expression la plus aboutie du style Peugeot — équilibre, prestance et finition GT.",
+    quote: 'Un break n\'est pas un compromis, c\'est une preuve d\'élégance.',
+    folder: './Visuel par page/Projets/PEUGEOT/308 GT SW/',
+    images: [
+      'hf_20260428_100412_03668f22-cb74-41ef-bdac-bbaa06b75443.png',
+      'hf_20260428_102350_d1d7054f-5a28-48b0-a04a-57511a6c72c6.png',
+      'hf_20260428_114515_a6aa98c0-84da-4b52-8ffc-cbe1b963cef2.png',
+      'hf_20260428_120321_a180710f-6472-4c7e-85ff-8f122af48fb9.png',
+      'hf_20260428_134043_c0c08c44-b8ef-46d3-894b-bfdca22de6b2.png'
+    ],
+    stats: [{n:'5', l:'Visuels'}, {n:'GT', l:'Finition'}, {n:'SW', l:'Format'}, {n:'2026', l:'Année'}]
+  },
+
+  'twingo-alpine': {
+    title: 'Twingo <em style="font-style:italic; color:var(--accent);">Alpine Concept</em>',
+    name: 'Twingo Alpine',
+    eyebrow: 'RENAULT · CONCEPT',
+    brand: 'Renault · Alpine', category: 'Citadine sportive', year: '2026',
+    lead: "Citadine sportive réinterprétée. Trois concepts qui imaginent une Twingo musclée façon Alpine.",
+    context: "La Twingo a été un phénomène urbain. La marier à l'ADN Alpine, c'est imaginer une mini hot-hatch joyeuse, accessible et radicale — une forme d'ironie sympathique sur les codes du sport-auto.",
+    quote: 'La sportivité commence souvent par le sourire.',
+    folder: './Visuel par page/Projets/RENAULT/Twingo Alpine concept/',
+    images: [
+      'hf_20260415_130927_6df0ac89-2d7f-4cb3-9a7b-21253594d6c7.png',
+      'hf_20260416_094839_f0535896-750e-4fdd-9eff-a2ddf851a636.png',
+      'hf_20260416_102902_846a52d7-2b76-4627-a23a-4a7dc34fbc9a.png'
+    ],
+    stats: [{n:'3', l:'Visuels'}, {n:'A', l:'Alpine'}, {n:'1', l:'Concept'}, {n:'2026', l:'Année'}]
+  },
+
+  'talisman-alpine': {
+    title: 'Talisman <em style="font-style:italic; color:var(--accent);">Esprit Alpine</em>',
+    name: 'Talisman Alpine',
+    eyebrow: 'RENAULT · BERLINE',
+    brand: 'Renault', category: 'Berline · Esprit Alpine', year: '2026',
+    lead: "Berline d'exception, signature Alpine. Trois visuels pour réimaginer la Talisman dans sa finition la plus raffinée.",
+    context: "Le segment des berlines premium françaises s'est éteint. J'ai imaginé son retour avec une Talisman Esprit Alpine : raffinée, performante, ancrée dans une certaine idée du chic à la française.",
+    quote: 'La berline française a encore une histoire à écrire.',
+    folder: './Visuel par page/Projets/RENAULT/Talisman Esprit Alpine/',
+    images: [
+      'hf_20260504_181411_287873e4-bcc3-44db-9dd2-c3ce119897a4.png',
+      'hf_20260504_182604_a8af951b-0546-4cbb-88a3-a70ecdbe1ceb.png',
+      'hf_20260504_184608_b5b3ee86-c9db-4503-b582-416360048047.png'
+    ],
+    stats: [{n:'3', l:'Visuels'}, {n:'A', l:'Alpine'}, {n:'1', l:'Berline'}, {n:'2026', l:'Année'}]
+  },
+
+  'concept-pub': {
+    title: 'Concept <em style="font-style:italic; color:var(--accent);">Pub</em>',
+    name: 'Concept Pub',
+    eyebrow: 'MOTION · VIDÉO',
+    brand: 'AP.StudioIA', category: 'Motion · Pub Reels', year: '2026',
+    lead: "Films publicitaires expérimentaux. Deux vidéos verticales (9:16) optimisées pour Instagram Reels et TikTok, qui mettent en valeur produits et marques avec une narration courte.",
+    context: "La pub courte est l'art du cadrage et du rythme. J'ai exploré comment générer en IA des séquences qui racontent une histoire en moins de dix secondes — un terrain ludique pour la direction artistique.",
+    quote: 'Dix secondes, c\'est assez pour faire désirer.',
+    folder: './Visuel par page/Projets/Concept Pub/',
+    hero: { type: 'video', src: 'PUB BMW/0427(1).mov', poster: '../Luxe et Automobile/Tasty Crousty x ford mustang/hf_20260427_142525_0021c700-e72c-4588-9939-5cf9980554ee.png' },
+    images: [
+      { type: 'video', src: 'PUB BMW/0427(1).mov' },
+      { type: 'video', src: 'PUB PREMIUM/copy_6CB0A85A-F003-4362-A773-12A3EE1A7D60 2.mov' }
+    ],
+    stats: [{n:'2', l:'Vidéos'}, {n:'9:16', l:'Format'}, {n:'Reels', l:'TikTok'}, {n:'2026', l:'Année'}]
+  }
+};
+
+const PROCESS_STEPS = [
+  { title: 'Recherche & moodboard', desc: 'Analyse de l\'ADN de la marque, sources d\'inspiration et cadrage narratif. Constitution d\'un moodboard premium.' },
+  { title: 'Génération IA', desc: 'Travail itératif via Higgfields, Kling AI et ChatGPT pour explorer angles, ambiances et finitions.' },
+  { title: 'Post-production', desc: 'Retouche Photoshop : harmonisation chromatique, ajustement des reflets, intégration cohérente de la signature de marque.' },
+  { title: 'Mise en scène éditoriale', desc: 'Construction d\'un récit visuel pour valoriser le sujet comme un objet de désir.' }
+];
+
+// Slug list pour navigation prev/next
+const SLUGS = Object.keys(PROJECTS_DATA);
+
+// === Lecture URL et population ===
+function getSlug() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('p');
+  return PROJECTS_DATA[slug] ? slug : 'audi-r8';
+}
+
+function buildMedia(folder, item, opts = {}) {
+  const isHero = !!opts.hero;
+  if (typeof item === 'string') {
+    return `<img src="${folder}${item}" alt="" loading="${isHero ? 'eager' : 'lazy'}">`;
+  }
+  if (item && item.type === 'video') {
+    const poster = item.poster ? `poster="${folder}${item.poster}"` : '';
+    return `<video muted loop playsinline autoplay preload="metadata" controls controlslist="nodownload" ${poster}>
+      <source src="${folder}${item.src}" type="video/mp4">
+      <source src="${folder}${item.src}" type="video/quicktime">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>`;
+  }
+  return '';
+}
+
+function render() {
+  const slug = getSlug();
+  const project = PROJECTS_DATA[slug];
+
+  // Page metadata
+  document.title = `${project.name} — Aurélien POTOLA`;
+  document.getElementById('curtain-name').textContent = project.name;
+  document.getElementById('pd-footer-name').textContent = project.name + '.';
+
+  // Header
+  document.getElementById('pd-eyebrow').textContent = project.eyebrow;
+  document.getElementById('pd-title').innerHTML = project.title;
+  document.getElementById('pd-lead').textContent = project.lead;
+  document.getElementById('pd-brand').textContent = project.brand;
+  document.getElementById('pd-category').textContent = project.category;
+  document.getElementById('pd-year').textContent = project.year;
+
+  // Hero
+  const heroSrc = project.hero || project.images[0];
+  const heroEl = document.getElementById('pd-hero-media');
+  heroEl.innerHTML = buildMedia(project.folder, heroSrc, { hero: true });
+  // If hero is a video (and looks vertical because slug is concept-pub), use vertical aspect
+  if (heroSrc && heroSrc.type === 'video' && slug === 'concept-pub') {
+    heroEl.classList.add('is-vertical');
+  }
+
+  // Context & quote
+  document.getElementById('pd-context').textContent = project.context;
+  document.getElementById('pd-quote').textContent = '« ' + project.quote + ' »';
+
+  // Process
+  const processHtml = PROCESS_STEPS.map((step, i) => `
+    <div class="timeline-row">
+      <div class="timeline-year" style="font-size:1.4rem;">${String(i+1).padStart(2,'0')}</div>
+      <div class="timeline-body">
+        <h3>${step.title}</h3>
+        <p>${step.desc}</p>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('pd-process').innerHTML = processHtml;
+
+  // Gallery
+  const galleryHtml = project.images.map((item, i) => {
+    const isVideo = item && item.type === 'video';
+    const cls = `item${isVideo ? ' has-video' : ''}`;
+    const role = isVideo ? '' : 'tabindex="0" role="button"';
+    const label = isVideo ? `aria-label="Vidéo ${i+1}"` : `aria-label="Agrandir le visuel ${i+1}"`;
+    return `<div class="${cls}" data-idx="${i}" data-video="${isVideo}" ${role} ${label}>
+      ${buildMedia(project.folder, item)}
+    </div>`;
+  }).join('');
+  document.getElementById('pd-gallery').innerHTML = galleryHtml;
+
+  // Stats
+  const statsHtml = project.stats.map(s => `
+    <div class="stat-item">
+      <span class="stat-num" style="color:var(--accent);">${s.n}</span>
+      <span class="stat-label">${s.l}</span>
+    </div>
+  `).join('');
+  document.getElementById('pd-stats').innerHTML = statsHtml;
+
+  // Prev / Next
+  const idx = SLUGS.indexOf(slug);
+  const prev = SLUGS[(idx - 1 + SLUGS.length) % SLUGS.length];
+  const next = SLUGS[(idx + 1) % SLUGS.length];
+  document.getElementById('pd-prev-next').innerHTML = `
+    <a class="pd-nav-link prev" href="?p=${prev}">
+      <span class="label">← Projet précédent</span>
+      <span class="title">${PROJECTS_DATA[prev].name}</span>
+    </a>
+    <a class="pd-nav-link next" href="?p=${next}">
+      <span class="label">Projet suivant →</span>
+      <span class="title">${PROJECTS_DATA[next].name}</span>
+    </a>
+  `;
+
+  // Lightbox bindings
+  setupLightbox(project);
+}
+
+function setupLightbox(project) {
+  const lb = document.getElementById('lightbox');
+  const lbContent = document.getElementById('lightbox-content');
+  const close = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.pd-gallery .item').forEach(el => {
+    // Skip lightbox for video items — they're playable inline with controls
+    if (el.dataset.video === 'true') return;
+
+    const open = () => {
+      const i = parseInt(el.dataset.idx, 10);
+      const item = project.images[i];
+      lbContent.innerHTML = buildMedia(project.folder, item);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+
+  const closeFn = () => {
+    lb.classList.remove('open');
+    lbContent.innerHTML = '';
+    document.body.style.overflow = '';
+  };
+  close.addEventListener('click', closeFn);
+  lb.addEventListener('click', e => { if (e.target === lb) closeFn(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFn(); });
+}
+
+render();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/bg-3d.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

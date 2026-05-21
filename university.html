@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0e0d0a">
+  <meta name="color-scheme" content="dark light">
+  <title>Université — Aurélien POTOLA · Bachelor TC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,100..900,0..100;1,9..144,100..900,0..100&family=Inter+Tight:ital,wght@0,400..800;1,400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* === Page-specific enhancements (university only) === */
+    .uni-hero {
+      position: relative; aspect-ratio: 16/9;
+      border-radius: var(--r-xl); overflow: hidden;
+      box-shadow: var(--shadow-card);
+      isolation: isolate;
+      background: #000;
+    }
+    .uni-hero img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 1.2s var(--ease);
+    }
+    .uni-hero:hover img { transform: scale(1.04); }
+    .uni-hero .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+    }
+    .uni-hero .meta {
+      position: absolute; bottom: var(--s-4); left: var(--s-4); right: var(--s-4);
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: var(--s-3); flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .section-heading {
+      display: flex; align-items: baseline;
+      gap: var(--s-3); margin-bottom: var(--s-5); flex-wrap: wrap;
+    }
+    .section-heading .num-tag {
+      font-family: var(--f-mono); font-size: 0.7rem;
+      color: var(--accent); letter-spacing: 0.2em;
+      padding: 0.4rem 0.8rem; border: 1px solid var(--accent);
+      border-radius: 999px;
+    }
+    .section-heading h2 { flex: 1; }
+
+    /* Photo grid for cohésion */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--s-2);
+    }
+    .photo-grid > a, .photo-grid > div {
+      border-radius: var(--r-lg); overflow: hidden;
+      position: relative; display: block;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.5s var(--ease);
+      cursor: zoom-in;
+    }
+    .photo-grid > a:hover { transform: translateY(-4px); }
+    .photo-grid img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.9s var(--ease);
+    }
+    .photo-grid > a:hover img { transform: scale(1.05); }
+    .photo-grid .span-7 { grid-column: span 7; aspect-ratio: 4/3; }
+    .photo-grid .span-5 { grid-column: span 5; aspect-ratio: 4/3; }
+    .photo-grid .span-6 { grid-column: span 6; aspect-ratio: 4/3; }
+    .photo-grid .span-12 { grid-column: span 12; aspect-ratio: 21/9; }
+
+    /* Project block layout */
+    .project-block {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: var(--s-6);
+      align-items: center;
+      padding: var(--s-6) 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .project-block.reverse { grid-template-columns: 7fr 5fr; }
+    .project-block:last-child { border-bottom: none; }
+
+    .project-visual {
+      aspect-ratio: 4/5;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: #000;
+      position: relative;
+    }
+    .project-visual img,
+    .project-visual video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .project-visual.contain {
+      background: var(--paper);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project-visual.contain img {
+      object-fit: contain; padding: var(--s-4);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: var(--s-3);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 92vw; max-height: 92vh; border-radius: var(--r-md); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+    .lightbox .close {
+      position: absolute; top: var(--s-3); right: var(--s-3);
+      width: 44px; height: 44px; border-radius: 999px;
+      background: rgba(255,255,255,0.1); color: #fff;
+      border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+      font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Achievement card */
+    .achievement-card {
+      padding: var(--s-3);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      transition: var(--t);
+    }
+    .achievement-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+    .achievement-card .icon {
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(var(--accent-rgb), 0.12);
+      color: var(--accent);
+      border-radius: 12px;
+      font-size: 1.4rem;
+      margin-bottom: var(--s-2);
+    }
+
+    @media (max-width: 980px) {
+      .uni-hero { aspect-ratio: 4/5; }
+      .project-block, .project-block.reverse { grid-template-columns: 1fr; }
+      .photo-grid .span-7,
+      .photo-grid .span-5,
+      .photo-grid .span-6 { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-3d" aria-hidden="true"></canvas>
+<div class="curtain"><span class="curtain-text">Université</span></div>
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Aurélien<span class="dot">.</span><span class="num">— 2026</span></a>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+        <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+        <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+        <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+        <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+        <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <button class="icon-btn theme-toggle" aria-label="Basculer thème"><span class="icon-sun">☀</span><span class="icon-moon">☾</span></button>
+      <button class="icon-btn lang-toggle" aria-label="Changer la langue"><span class="lang-label">EN</span></button>
+      <button class="icon-btn menu-toggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== INTRO ===== -->
+<section style="padding-top: 160px;">
+  <div class="container">
+    <p class="eyebrow reveal" data-i18n="uni.eyebrow">Bachelor Techniques de Commercialisation</p>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap: var(--s-3); margin-top: var(--s-2);">
+      <h1 class="reveal" data-i18n="uni.title">À l'IUT, <span class="gradient-text">je m'investis</span>.</h1>
+      <p class="lead reveal" style="max-width:42ch;" data-i18n="uni.lead">Au-delà des cours, je crois aux apprentissages collectifs. Voici les projets pédagogiques et tutorés qui ont marqué mon parcours à l'Université de la Réunion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURED — PROJET TUTORÉ ===== -->
+<section style="padding-top: 0; padding-bottom: var(--s-5);">
+  <div class="container">
+    <p class="eyebrow reveal" style="margin-bottom: var(--s-2);">Projet vedette</p>
+    <a href="#projet-tutore" class="uni-hero reveal" style="display:block;">
+      <img src="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_2932.JPG" alt="Journée de cohésion sportive — Projet Tutoré" loading="eager">
+      <div class="overlay"></div>
+      <div class="meta">
+        <div>
+          <span style="font-family:var(--f-mono); font-size:0.7rem; color:rgba(255,255,255,0.85); letter-spacing:0.2em; text-transform:uppercase;">Featured · Projet Tutoré · 2025</span>
+          <h2 style="color:#fff; font-style:italic; margin-top:0.6rem; font-size:clamp(2rem,5vw,4rem); text-shadow: 0 2px 30px rgba(0,0,0,0.4);">Journée de cohésion sportive</h2>
+          <p style="color:rgba(255,255,255,0.92); margin-top:0.5rem; max-width:50ch; text-shadow: 0 1px 12px rgba(0,0,0,0.5);">Organisation complète d'un événement sportif inter-promotions — gestion de projet, coordination, communication & logistique.</p>
+        </div>
+        <span class="btn btn-ghost" style="border-color:rgba(255,255,255,0.5); color:#fff; backdrop-filter: blur(8px); background:rgba(0,0,0,0.25);">Découvrir →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="stats reveal">
+      <div class="stat-item">
+        <span class="stat-num"><span class="count-up" data-count="3">0</span></span>
+        <span class="stat-label">Années Bachelor TC</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num"><span class="count-up" data-count="4">0</span></span>
+        <span class="stat-label">Projets pédagogiques</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Année de diplôme</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">B</span>
+        <span class="stat-label">Mention Bien (Bac)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FORMATION ===== -->
+<section>
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="num-tag">FORMATION</span>
+      <h2>Mon parcours <em style="font-style:italic; color:var(--accent);">académique</em>.</h2>
+    </div>
+    <div class="timeline-edit reveal">
+
+      <div class="timeline-row">
+        <div class="timeline-year">2023 —<br>2026</div>
+        <div class="timeline-body">
+          <h3>Bachelor Techniques de Commercialisation</h3>
+          <p class="place">IUT de la Réunion · Université de la Réunion</p>
+          <p>Parcours <strong>Marketing et Management du Point de Vente</strong>. Formation complète en marketing, vente, communication et gestion commerciale. Expérience terrain via projets tutorés et stages.</p>
+          <div class="tag-list">
+            <span>Marketing</span><span>Management</span><span>Point de vente</span><span>Stratégie commerciale</span><span>Communication</span><span>Gestion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-body">
+          <h3>Baccalauréat STMG Mercatique <span style="color:var(--accent); font-style:italic;">— Mention Bien</span></h3>
+          <p class="place">Lycée Privé La Salle Maison Blanche · Saint-Paul</p>
+          <p>Baccalauréat technologique avec spécialisation Mercatique. Parallèlement : <strong>bénévolat pour l'association Akamasoa du Père Pedro</strong> (Madagascar) — engagement humanitaire formateur.</p>
+          <div class="tag-list">
+            <span>Mercatique</span><span>Mention Bien</span><span>Bénévolat</span><span>Madagascar</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJET TUTORÉ — Cohésion sportive ===== -->
+<section id="projet-tutore">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="num-tag">PROJET 01</span>
+      <h2>Journée de cohésion <em style="font-style:italic; color:var(--accent);">sportive</em>.</h2>
+    </div>
+
+    <div class="project-block reveal">
+      <div>
+        <span class="eyebrow no-line" style="color:var(--accent);">Projet Tutoré · 2025</span>
+        <h3 style="margin-top:0.6rem; margin-bottom: var(--s-2); font-size:clamp(1.3rem,2.5vw,2.2rem);">Organiser un événement de A à Z</h3>
+        <p style="color:var(--ink-soft); line-height:1.7; margin-bottom: var(--s-3);">Pilotage complet d'un événement sportif inter-promotions au sein de l'IUT. De la définition du concept à l'animation sur le terrain — un exercice grandeur nature de gestion de projet.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); margin-bottom: var(--s-3);">
+          <div class="achievement-card">
+            <div class="icon">🎯</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Coordination</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Gestion d'une équipe pluridisciplinaire</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">📣</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Communication</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Affiches, réseaux sociaux, événementiel</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">📦</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Logistique</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Matériel, planning, partenaires</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">🏆</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Animation</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Encadrement et gestion sur le terrain</p>
+          </div>
+        </div>
+
+        <div class="tag-list">
+          <span>Gestion de projet</span><span>Événementiel</span><span>Sport</span><span>Communication</span><span>Travail d'équipe</span>
+        </div>
+      </div>
+
+      <div class="project-visual contain" style="aspect-ratio: 4/5;">
+        <img src="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/LG.png" alt="Logo Journée de cohésion sportive" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Galerie photos cohésion -->
+    <h3 class="reveal" style="margin: var(--s-5) 0 var(--s-3); font-size:1.3rem;">L'événement en images</h3>
+    <div class="photo-grid reveal" id="photo-grid-cohesion">
+      <a class="span-7" data-img="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_2932.JPG">
+        <img src="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_2932.JPG" alt="Cohésion sportive — moment 1" loading="lazy">
+      </a>
+      <a class="span-5" data-img="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_2938.JPG">
+        <img src="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_2938.JPG" alt="Cohésion sportive — moment 2" loading="lazy">
+      </a>
+      <a class="span-12" data-img="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_3125 - Elsa Mojard.jpeg">
+        <img src="./Visuel par page/Université/Projet Tutoré/Journée de cohésion sportive/IMG_3125 - Elsa Mojard.jpeg" alt="Cohésion sportive — équipe complète (par Elsa Mojard)" loading="lazy">
+      </a>
+    </div>
+    <p style="font-family:var(--f-mono); font-size:0.7rem; color:var(--ink-mute); letter-spacing:0.18em; text-transform:uppercase; margin-top: var(--s-2);">📸 Cliquez sur une image pour l'agrandir</p>
+  </div>
+</section>
+
+<!-- ===== HÉRITAGE — Création d'entreprise ===== -->
+<section>
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="num-tag">PROJET 02</span>
+      <h2>Création d'entreprise <em style="font-style:italic; color:var(--accent);">— Héritage</em>.</h2>
+    </div>
+
+    <div class="project-block reverse reveal">
+      <div class="project-visual" style="aspect-ratio: 9/16; max-width:380px;">
+        <video muted loop playsinline autoplay preload="metadata" controls controlslist="nodownload">
+          <source src="./Visuel par page/Université/Projet pédagogique/Création d'une entreprise/publicité club prestige .mov" type="video/mp4">
+          <source src="./Visuel par page/Université/Projet pédagogique/Création d'une entreprise/publicité club prestige .mov" type="video/quicktime">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </div>
+
+      <div>
+        <span class="eyebrow no-line" style="color:var(--accent);">Projet pédagogique · 2024</span>
+        <h3 style="margin-top:0.6rem; margin-bottom: var(--s-2); font-size:clamp(1.3rem,2.5vw,2.2rem);">Imaginer et pitcher un projet entrepreneurial</h3>
+        <p style="color:var(--ink-soft); line-height:1.7; margin-bottom: var(--s-3);">Conception complète d'un projet de création d'entreprise — <strong>Héritage</strong>, club prestige autour des valeurs et de l'élégance. Étude de marché, business plan, stratégie marketing, identité visuelle et présentation orale.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); margin-bottom: var(--s-3);">
+          <div class="achievement-card">
+            <div class="icon">📊</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Étude de marché</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Analyse concurrentielle et cible</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">💼</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Business plan</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Modèle économique et finances</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">🎨</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Identité visuelle</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Logo, charte, supports de pub</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">🎤</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Pitch</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Présentation orale devant jury</p>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <a href="Heritage_Presentation_Aurelien_POTOLA.pdf" target="_blank" rel="noopener" download class="btn btn-primary">📄 Présentation complète (PDF)</a>
+        </div>
+
+        <div class="tag-list" style="margin-top: var(--s-3);">
+          <span>Business plan</span><span>Étude de marché</span><span>Pitch</span><span>Stratégie</span><span>Branding</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo Héritage -->
+    <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--s-2); margin-top: var(--s-3);">
+      <div style="aspect-ratio:16/9; border-radius:var(--r-lg); overflow:hidden; box-shadow: var(--shadow-soft); background: var(--paper); display:flex; align-items:center; justify-content:center; padding: var(--s-3);">
+        <img src="./Visuel par page/Université/Projet pédagogique/Création d'une entreprise/Entreprise.png" alt="Logo et identité visuelle Héritage" style="max-width:100%; max-height:100%; object-fit:contain;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COFFEE SHOP SUNRISE ===== -->
+<section>
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="num-tag">PROJET 03</span>
+      <h2>Coffee Shop éphémère <em style="font-style:italic; color:var(--accent);">— SUNRISE</em>.</h2>
+    </div>
+
+    <div class="project-block reveal">
+      <div>
+        <span class="eyebrow no-line" style="color:var(--accent);">Projet pédagogique · 2024</span>
+        <h3 style="margin-top:0.6rem; margin-bottom: var(--s-2); font-size:clamp(1.3rem,2.5vw,2.2rem);">Lancer un commerce en conditions réelles</h3>
+        <p style="color:var(--ink-soft); line-height:1.7; margin-bottom: var(--s-3);">Conception et lancement d'un <strong>coffee shop éphémère SUNRISE</strong> en équipe. De la stratégie marketing à l'opérationnel : branding, merchandising, communication, gestion commerciale et expérience client en conditions réelles.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); margin-bottom: var(--s-3);">
+          <div class="achievement-card">
+            <div class="icon">☕</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Concept</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Positionnement et offre produits</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">🛍️</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Merchandising</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Aménagement, vitrines, ambiance</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">📱</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Communication</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Réseaux sociaux et affichage</p>
+          </div>
+          <div class="achievement-card">
+            <div class="icon">💰</div>
+            <h4 style="font-size:1rem; margin-bottom:0.3rem;">Gestion</h4>
+            <p style="color:var(--ink-soft); font-size:0.88rem;">Caisse, stocks, encadrement</p>
+          </div>
+        </div>
+
+        <div class="tag-list">
+          <span>Branding</span><span>Merchandising</span><span>Équipe</span><span>Lancement</span><span>Retail</span>
+        </div>
+      </div>
+
+      <div class="project-visual" style="aspect-ratio: 4/5;">
+        <img src="./Visuel par page/Université/Projet pédagogique/Coffee shop ephémere /equipe 3 SUNRISE .jpg" alt="Coffee shop SUNRISE — équipe 3" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPÉTENCES ACQUISES ===== -->
+<section>
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="num-tag">SKILLS</span>
+      <h2>Ce que ces projets m'ont <em style="font-style:italic; color:var(--accent);">appris</em>.</h2>
+    </div>
+
+    <div class="grid grid-3 stagger reveal">
+      <div class="card">
+        <div class="display-num" style="font-size:3rem;">01</div>
+        <h3 style="margin-top:var(--s-2);">Gestion de projet</h3>
+        <p style="color:var(--ink-soft); margin-top:0.6rem;">Cadrage, planification, coordination d'équipe, suivi des deadlines et reporting. Des compétences transposables dans n'importe quel contexte professionnel.</p>
+      </div>
+      <div class="card">
+        <div class="display-num" style="font-size:3rem;">02</div>
+        <h3 style="margin-top:var(--s-2);">Communication</h3>
+        <p style="color:var(--ink-soft); margin-top:0.6rem;">Pitch, présentations orales, supports visuels, prise de parole devant un jury. Articuler une idée et la défendre face à un public exigeant.</p>
+      </div>
+      <div class="card">
+        <div class="display-num" style="font-size:3rem;">03</div>
+        <h3 style="margin-top:var(--s-2);">Esprit commercial</h3>
+        <p style="color:var(--ink-soft); margin-top:0.6rem;">Étude de marché, positionnement, proposition de valeur. Penser comme un entrepreneur — comprendre une cible et lui parler juste.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PULL QUOTE ===== -->
+<section style="padding: var(--s-6) 0;">
+  <div class="container">
+    <blockquote class="pull-quote reveal">
+      L'université ne forme pas seulement à un métier. Elle apprend à penser, à collaborer, à oser.
+    </blockquote>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="card reveal" style="text-align:center; padding: var(--s-8);">
+      <p class="eyebrow no-line" style="justify-content:center;" data-i18n="uni.endingTitle">L'engagement, ça forme.</p>
+      <h2 style="margin-top: var(--s-2); margin-bottom: var(--s-3);">Et maintenant ?</h2>
+      <p style="color:var(--ink-soft); max-width:60ch; margin: 0 auto var(--s-4);" data-i18n="uni.endingP">Ces projets m'ont appris autant que mes cours : gestion, communication, esprit d'équipe et créativité — des compétences essentielles pour le marketing.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a href="experience.html" class="btn btn-primary" data-i18n="uni.endingCta">Voir mon expérience pro →</a>
+        <a href="CV_Aurelien_POTOLA.pdf" target="_blank" rel="noopener" class="btn btn-ghost">📄 Télécharger mon CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vue agrandie">
+  <button class="close" id="lightbox-close" aria-label="Fermer">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <p class="huge-foot">Université.</p>
+    <div class="footer-grid">
+      <div>
+        <p class="lead" style="max-width:36ch;">Aurélien POTOLA — Visual Merchandising & Création IA. Disponible pour une alternance Master Marketing.</p>
+        <div style="margin-top: var(--s-3);">
+          <a href="contact.html" class="btn btn-primary" style="font-size:0.85rem;padding:0.75rem 1.4rem;" data-i18n="cta.contactArrow">Me contacter →</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="projects.html" data-i18n="nav.projects">Projets</a></li>
+          <li><a href="experience.html" data-i18n="nav.experience">Expérience</a></li>
+          <li><a href="skills.html" data-i18n="nav.skills">Compétences</a></li>
+          <li><a href="cv.html" data-i18n="nav.cv">CV</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens</h4>
+        <ul>
+          <li><a href="about.html" data-i18n="nav.about">À propos</a></li>
+          <li><a href="university.html" data-i18n="nav.university">Université</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Réseaux</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/aurélien-potola-5750232b1" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ap.studio.974?igsh=a29wNXZza290OWJy&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@ap.studio974?_r=1&_t=ZN-966sohOCoP0" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="mailto:potola.aurelien974@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.rights">© 2026 Aurélien POTOLA — Tous droits réservés.</span>
+      <span>Île de la Réunion 🇷🇪</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/bg-3d.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- ===== Lightbox photos cohésion ===== -->
+<script>
+  (function() {
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const close = document.getElementById('lightbox-close');
+    const items = document.querySelectorAll('#photo-grid-cohesion a[data-img]');
+
+    items.forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        lbImg.src = el.dataset.img;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeFn = () => {
+      lb.classList.remove('open');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    };
+    close.addEventListener('click', closeFn);
+    lb.addEventListener('click', e => { if (e.target === lb) closeFn(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFn(); });
+  })();
+</script>
+</body>
+</html>
