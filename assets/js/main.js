@@ -360,7 +360,7 @@ if (form) {
     submitBtn.disabled = true;
     submitBtn.textContent = lang === 'fr' ? 'Envoi en cours…' : 'Sending…';
 
-    fetch('https://formspree.io/f/VOTRE_ID_FORMSPREE', {
+    fetch('https://formspree.io/f/xykvqbrn', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
