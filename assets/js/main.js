@@ -352,19 +352,57 @@ if (form) {
       return;
     }
 
-    // 6. OK — on enregistre et on envoie via mailto:
+    // 6. OK — on enregistre et on envoie via Formspree
     sessionStorage.setItem('lastFormSubmit', String(Date.now()));
-    const body = `Nom: ${data.name}\nEmail: ${data.email}\n\n${data.message}`;
-    const mailto = `mailto:potola.aurelien974@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
 
-    setTimeout(() => {
+    const submitBtn = form.querySelector('[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = lang === 'fr' ? 'Envoi en cours…' : 'Sending…';
+
+    fetch('https://formspree.io/f/VOTRE_ID_FORMSPREE', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        _replyto: data.email,
+        subject: data.subject,
+        message: data.message,
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+      if (result.ok) {
+        // Succès — afficher le message de confirmation
+        form.innerHTML = `
+          <div style="text-align:center; padding: var(--s-6) var(--s-4);">
+            <p style="font-size:2.5rem; margin-bottom: var(--s-3);">✅</p>
+            <h3 style="font-family:var(--f-display); font-style:italic; margin-bottom: var(--s-2);">
+              ${lang === 'fr' ? 'Message envoyé !' : 'Message sent!'}
+            </h3>
+            <p style="color:var(--ink-soft); font-size:0.95rem;">
+              ${lang === 'fr'
+                ? 'Merci pour votre message. Je vous réponds dans les 48h.'
+                : 'Thank you for your message. I\'ll reply within 48h.'}
+            </p>
+          </div>`;
+      } else {
+        // Erreur Formspree
+        alert(lang === 'fr'
+          ? 'Une erreur est survenue. Merci de réessayer ou d\'envoyer un email directement.'
+          : 'An error occurred. Please try again or send an email directly.');
+      }
+    })
+    .catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
       alert(lang === 'fr'
-        ? 'Votre messagerie va s\'ouvrir pour finaliser l\'envoi. Réponse sous 48h.'
-        : 'Your mail client will open to finish sending. Reply within 48h.');
-      form.reset();
-      if (charCountEl) charCountEl.textContent = '0';
-    }, 300);
+        ? 'Impossible d\'envoyer le message. Vérifiez votre connexion ou contactez-moi par email.'
+        : 'Could not send message. Check your connection or contact me by email.');
+    });
   });
 }
 
