@@ -587,7 +587,7 @@ function buildMedia(folder, item, opts = {}) {
   }
   if (item && item.type === 'video') {
     const poster = item.poster ? `poster="${folder}${item.poster}"` : '';
-    return `<video muted loop playsinline autoplay preload="metadata" controls controlslist="nodownload" ${poster}>
+    return `<video muted loop playsinline autoplay preload="none" controls controlslist="nodownload" ${poster}>
       <source src="${folder}${item.src}" type="video/mp4">
       <source src="${folder}${item.src}" type="video/quicktime">
       Votre navigateur ne supporte pas la vidéo.
