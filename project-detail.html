@@ -554,10 +554,10 @@ const PROJECTS_DATA = {
     context: "La pub courte est l'art du cadrage et du rythme. J'ai exploré comment générer en IA des séquences qui racontent une histoire en moins de dix secondes — un terrain ludique pour la direction artistique.",
     quote: 'Dix secondes, c\'est assez pour faire désirer.',
     folder: './Visuel par page/Projets/Concept Pub/',
-    hero: { type: 'video', src: 'PUB BMW/0427(1).mov', poster: '../Luxe et Automobile/Tasty Crousty x ford mustang/hf_20260427_142525_0021c700-e72c-4588-9939-5cf9980554ee.png' },
+    hero: { type: 'video', src: 'PUB BMW/0427(1).mp4', poster: '../Luxe et Automobile/Tasty Crousty x ford mustang/hf_20260427_142525_0021c700-e72c-4588-9939-5cf9980554ee.png' },
     images: [
-      { type: 'video', src: 'PUB BMW/0427(1).mov' },
-      { type: 'video', src: 'PUB PREMIUM/copy_6CB0A85A-F003-4362-A773-12A3EE1A7D60 2.mov' }
+      { type: 'video', src: 'PUB BMW/0427(1).mp4' },
+      { type: 'video', src: 'PUB PREMIUM/copy_6CB0A85A-F003-4362-A773-12A3EE1A7D60 2.mp4' }
     ],
     stats: [{n:'2', l:'Vidéos'}, {n:'9:16', l:'Format'}, {n:'Reels', l:'TikTok'}, {n:'2026', l:'Année'}]
   }
@@ -589,7 +589,6 @@ function buildMedia(folder, item, opts = {}) {
     const poster = item.poster ? `poster="${folder}${item.poster}"` : '';
     return `<video muted loop playsinline autoplay preload="none" controls controlslist="nodownload" ${poster}>
       <source src="${folder}${item.src}" type="video/mp4">
-      <source src="${folder}${item.src}" type="video/quicktime">
       Votre navigateur ne supporte pas la vidéo.
     </video>`;
   }
