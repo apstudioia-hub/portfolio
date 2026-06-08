@@ -294,40 +294,6 @@
 <!-- ===== DATA + DYNAMIC LOGIC ===== -->
 <script>
 const PROJECTS_DATA = {
-  'audi-rs7': {
-    title: 'Audi <em style="font-style:italic; color:var(--accent);">RS7</em>',
-    name: 'Audi RS7',
-    eyebrow: 'AUDI · LUXE',
-    brand: 'Audi',
-    category: 'Berline sportive · Luxe',
-    year: '2026',
-    lead: "Berline sportive haute performance — l'Audi RS7 en 5 visuels entre puissance allemande et élégance sculpturale.",
-    context: "L'Audi RS7 est l'expression ultime du grand tourisme allemand — une berline 4 portes qui cache 630 chevaux derrière des lignes de coupé. J'ai cherché à capturer cette dualité : brutalité contenue et raffinement absolu.",
-    quote: 'La perfection allemande se reconnaît au premier regard.',
-    folder: './Visuel par page/Projets/Luxe et Automobile/RS7/',
-    images: [
-      'hf_20260514_204239_b6b36573-4b05-45c9-bedb-38cdb3866635.png',
-      'hf_20260514_204527_a68b32a4-9837-4b10-8ac7-397eb53e6f20.png',
-      'hf_20260514_204642_87bd0aeb-4b77-40b7-bf41-fe1fd06b8201.png',
-      'hf_20260514_205202_53a59963-9345-40d5-ab23-c44dc9f74437.png',
-      'hf_20260514_212100_ef427868-2873-4cb7-82f6-4d5b15f4c0c6.png'
-    ],
-    stats: [{n:'5', l:'Visuels'}, {n:'630', l:'Chevaux'}, {n:'RS7', l:'Signature'}, {n:'2026', l:'Année'}]
-  },
-
-  'peugeot-408': {
-    title: 'Peugeot <em style="font-style:italic; color:var(--accent);">408</em>',
-    name: 'Peugeot 408',
-    eyebrow: 'PEUGEOT · STUDIO',
-    brand: 'Peugeot', category: 'Berline', year: '2026',
-    lead: "Direction artistique pour la Peugeot 408 — présentation produit en quatre angles signature et un rendu studio premium.",
-    context: "La 408 incarne la nouvelle direction stylistique de Peugeot. J'ai souhaité capturer ses lignes felines avec une lumière contrôlée et une mise en scène minimaliste qui valorise le galbe de la carrosserie.",
-    quote: 'La beauté du design se révèle dans la précision de la lumière.',
-    folder: './Visuel par page/Projets/PEUGEOT/408/',
-    images: ['Design sans titre-4.jpg','AV1.png','AV2.png','AR1.png','AE2.png'],
-    stats: [{n:'5', l:'Visuels'}, {n:'4', l:'Angles'}, {n:'1', l:'Studio'}, {n:'2026', l:'Année'}]
-  },
-
   'tiffany': {
     title: 'Tiffany — <em style="font-style:italic; color:var(--accent);">Eternal Blue</em>',
     name: 'Tiffany',
@@ -372,7 +338,7 @@ const PROJECTS_DATA = {
     name: 'Rafale RS',
     eyebrow: 'RENAULT · SPORT',
     brand: 'Renault', category: 'SUV Coupé Sport', year: '2026',
-    lead: "SUV coupé sportif, signature Alpine. Six visuels qui explorent le caractère affirmé du nouveau fer de lance Renault.",
+    lead: "SUV coupé sportif, signature Alpine. Visuels et vidéo cinématique qui explorent le caractère affirmé du nouveau fer de lance Renault.",
     context: "La Rafale incarne l'aboutissement de la nouvelle stratégie Renault — un SUV-coupé qui se veut prestige sans se renier. J'ai accentué la posture athlétique et la signature lumineuse pour révéler son intention sportive.",
     quote: 'Une voiture sportive doit faire battre le cœur avant de tourner la clé.',
     folder: './Visuel par page/Projets/RENAULT/Rafale RS/',
@@ -380,9 +346,11 @@ const PROJECTS_DATA = {
     images: [
       'hf_20260504_210049_a5af4e5b-ce0d-4539-ac57-ba88d2f33b77.png',
       'hf_20260504_210806_3adf2be1-c351-4e24-9b58-e710a971eca7.png',
-      'hf_20260504_211627_e3dc62f2-c6c6-4016-a6a3-9d9eab897e02.png'
+      'hf_20260504_211627_e3dc62f2-c6c6-4016-a6a3-9d9eab897e02.png',
+      'AR2.png',
+      { type: 'video', src: '../Renault Rafale vidéo /hf_20260605_051846_6c54fb86-3684-46b9-bf65-6b5fb14dbd15.mp4' }
     ],
-    stats: [{n:'3', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'SUV', l:'Format'}, {n:'2026', l:'Année'}]
+    stats: [{n:'5', l:'Visuels'}, {n:'RS', l:'Signature'}, {n:'SUV', l:'Format'}, {n:'2026', l:'Année'}]
   },
 
   'vision-alpina-zapa': {
@@ -404,23 +372,6 @@ const PROJECTS_DATA = {
     stats: [{n:'5', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Vision'}, {n:'2026', l:'Année'}]
   },
 
-  'm3-desert': {
-    title: 'M3 <em style="font-style:italic; color:var(--accent);">Desert</em>',
-    name: 'M3 Desert',
-    eyebrow: 'BMW · EDITORIAL',
-    brand: 'BMW', category: 'Editorial · Desert', year: '2026',
-    lead: "BMW M3 en décor désertique — direction artistique cinématographique, 3 visuels entre performance et minéral.",
-    context: "Le désert offre la meilleure scène pour une voiture de performance : pas de circuit, pas de public, juste l'horizon. La BMW M3 y trouve son expression la plus pure — sculpture dans le vide.",
-    quote: 'La performance a besoin d\'espace pour s\'exprimer.',
-    folder: './Visuel par page/Projets/Luxe et Automobile/M3 Desert/',
-    images: [
-      'hf_20260511_214126_176e8788-bbd6-495e-b869-ab42a37f8ed2.png',
-      'hf_20260511_222205_311df171-3cdd-4934-9000-9a4e5876ffae.png',
-      'hf_20260511_222440_9d4167c3-baea-430b-b58c-d6d91dce1bf5.png'
-    ],
-    stats: [{n:'3', l:'Visuels'}, {n:'M3', l:'Signature'}, {n:'Desert', l:'Décor'}, {n:'2026', l:'Année'}]
-  },
-
   'peugeot-508': {
     title: 'Peugeot 508 <em style="font-style:italic; color:var(--accent);">PSE</em>',
     name: 'Peugeot 508 PSE',
@@ -437,25 +388,6 @@ const PROJECTS_DATA = {
       'hf_20260502_140620_ff6d94f8-10ce-4f17-b1c4-6353fa7c1319.jpeg'
     ],
     stats: [{n:'4', l:'Visuels'}, {n:'PSE', l:'Signature'}, {n:'1', l:'Marque'}, {n:'2026', l:'Année'}]
-  },
-
-  'alpine-suv': {
-    title: 'Alpine <em style="font-style:italic; color:var(--accent);">SUV</em>',
-    name: 'Alpine SUV',
-    eyebrow: 'ALPINE · CONCEPT',
-    brand: 'Alpine', category: 'Concept · SUV Sportif', year: '2026',
-    lead: "Vision contemporaine du SUV sportif Alpine. Cinq concepts pour imaginer le successeur de l'A110 au format familial.",
-    context: "Alpine doit grandir sans se trahir. J'ai cherché le compromis exact entre l'ADN du roadster A110 et les exigences d'un SUV moderne — proportions tendues, lumière fine, signature bleu Alpine.",
-    quote: 'Croître sans renier, c\'est l\'art des grandes marques.',
-    folder: './Visuel par page/Projets/RENAULT/ALPINE SUV/',
-    images: [
-      'hf_20260429_141718_f1fe7b2e-7160-4732-b9b6-8a1165f1c96c.png',
-      'hf_20260429_142020_c5fbdafa-19f9-420e-9082-16a2a5da3795.png',
-      'hf_20260429_143326_7b437587-1e31-42eb-9d35-cacfefd57976.png',
-      'hf_20260429_144902_2939ce11-a652-4f61-94dd-b87cac4e153d.png',
-      'hf_20260429_145449_f7297f0e-5791-4db7-994e-fc34877958cc.png'
-    ],
-    stats: [{n:'5', l:'Visuels'}, {n:'1', l:'Concept'}, {n:'A110', l:'Héritage'}, {n:'2026', l:'Année'}]
   },
 
   'clio-6-rs': {
@@ -491,41 +423,6 @@ const PROJECTS_DATA = {
       'hf_20260427_152206_65a4dd85-f9e3-4a79-afb2-100a8b2c8490.png'
     ],
     stats: [{n:'4', l:'Visuels'}, {n:'2', l:'Marques'}, {n:'1', l:'Pub'}, {n:'2026', l:'Année'}]
-  },
-
-  'm2-cs-psg': {
-    title: 'M2 CS × <em style="font-style:italic; color:var(--accent);">PSG</em>',
-    name: 'M2 CS × PSG',
-    eyebrow: 'BMW · SPORT · CULTURE',
-    brand: 'BMW · Paris Saint-Germain', category: 'Crossover · Sport · Culture', year: '2026',
-    lead: "Collaboration fictive BMW M2 CS × Paris Saint-Germain — 4 visuels entre piste et stade, performance et culture.",
-    context: "BMW et le PSG partagent l'exigence de la performance et le soin du détail. Cette collaboration imaginaire réunit deux icônes du sport dans une série visuelle qui joue avec les codes des deux univers — bleu, rouge et or.",
-    quote: 'La performance est un langage universel.',
-    folder: './Visuel par page/Projets/M2 CS PSG/',
-    images: [
-      'hf_20260510_192400_d4887262-ec92-4f40-9ede-f5e211feb6ab.png',
-      'hf_20260510_194800_f6b52918-0db9-4633-b291-7dfaf2eed2bc.png',
-      'hf_20260510_195812_fc9d5018-cd4f-4260-9017-cbecf80cf6fd.png',
-      'hf_20260510_200612_c89d8055-755b-4d73-8f41-b046d3ed73c8.png'
-    ],
-    stats: [{n:'4', l:'Visuels'}, {n:'M2 CS', l:'Performance'}, {n:'PSG', l:'Culture'}, {n:'2026', l:'Année'}]
-  },
-
-  'twingo-alpine': {
-    title: 'Twingo <em style="font-style:italic; color:var(--accent);">Alpine Concept</em>',
-    name: 'Twingo Alpine',
-    eyebrow: 'RENAULT · CONCEPT',
-    brand: 'Renault · Alpine', category: 'Citadine sportive', year: '2026',
-    lead: "Citadine sportive réinterprétée. Trois concepts qui imaginent une Twingo musclée façon Alpine.",
-    context: "La Twingo a été un phénomène urbain. La marier à l'ADN Alpine, c'est imaginer une mini hot-hatch joyeuse, accessible et radicale — une forme d'ironie sympathique sur les codes du sport-auto.",
-    quote: 'La sportivité commence souvent par le sourire.',
-    folder: './Visuel par page/Projets/RENAULT/Twingo Alpine concept/',
-    images: [
-      'hf_20260415_130927_6df0ac89-2d7f-4cb3-9a7b-21253594d6c7.png',
-      'hf_20260416_094839_f0535896-750e-4fdd-9eff-a2ddf851a636.png',
-      'hf_20260416_102902_846a52d7-2b76-4627-a23a-4a7dc34fbc9a.png'
-    ],
-    stats: [{n:'3', l:'Visuels'}, {n:'A', l:'Alpine'}, {n:'1', l:'Concept'}, {n:'2026', l:'Année'}]
   },
 
   'talisman-alpine': {
@@ -577,7 +474,7 @@ const SLUGS = Object.keys(PROJECTS_DATA);
 function getSlug() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('p');
-  return PROJECTS_DATA[slug] ? slug : 'audi-rs7';
+  return PROJECTS_DATA[slug] ? slug : 'renault-rafale';
 }
 
 function buildMedia(folder, item, opts = {}) {
