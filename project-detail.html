@@ -147,7 +147,7 @@
 <!-- ===== INTRO ===== -->
 <section style="padding-top: 160px;">
   <div class="container" style="max-width:1080px;">
-    <a href="projects.html" style="font-family:var(--f-mono); font-size:0.78rem; color:var(--ink-mute); letter-spacing:0.15em; text-transform:uppercase;">← Retour aux projets</a>
+    <a href="projects.html" style="font-family:var(--f-mono); font-size:0.78rem; color:var(--ink-mute); letter-spacing:0.15em; text-transform:uppercase;" data-i18n="pd.back">← Retour aux projets</a>
 
     <p class="eyebrow reveal" style="margin-top: var(--s-3);" id="pd-eyebrow">AP.StudioIA · Direction artistique</p>
     <h1 class="reveal" id="pd-title">Projet</h1>
@@ -156,15 +156,15 @@
     <!-- Méta projet -->
     <div class="hero-meta reveal" style="margin-top: var(--s-5);">
       <div>
-        <span class="label">Marque</span>
+        <span class="label" data-i18n="pd.brand">Marque</span>
         <span class="value" id="pd-brand">—</span>
       </div>
       <div>
-        <span class="label">Catégorie</span>
+        <span class="label" data-i18n="pd.cat">Catégorie</span>
         <span class="value" id="pd-category">—</span>
       </div>
       <div>
-        <span class="label">Année</span>
+        <span class="label" data-i18n="pd.year">Année</span>
         <span class="value" id="pd-year">2026</span>
       </div>
     </div>
@@ -185,7 +185,7 @@
   <div class="container" style="max-width:1080px;">
     <div class="grid-asymmetric">
       <div class="reveal">
-        <h2 style="margin-bottom: var(--s-3);">Le contexte</h2>
+        <h2 style="margin-bottom: var(--s-3);" data-i18n="pd.context">Le contexte</h2>
         <p id="pd-context" style="color:var(--ink-soft); line-height:1.8;">…</p>
       </div>
       <div class="reveal">
@@ -200,7 +200,7 @@
 <!-- ===== PROCESS ===== -->
 <section>
   <div class="container" style="max-width:1080px;">
-    <h2 class="reveal" style="margin-bottom: var(--s-4);">Direction artistique</h2>
+    <h2 class="reveal" style="margin-bottom: var(--s-4);" data-i18n="pd.artdir">Direction artistique</h2>
     <div class="timeline-edit reveal" id="pd-process">
       <!-- inserted by JS -->
     </div>
@@ -210,7 +210,7 @@
 <!-- ===== GALERIE ===== -->
 <section>
   <div class="container" style="max-width:1080px;">
-    <h2 class="reveal" style="margin-bottom: var(--s-4);">La série complète</h2>
+    <h2 class="reveal" style="margin-bottom: var(--s-4);" data-i18n="pd.series">La série complète</h2>
     <div class="pd-gallery reveal" id="pd-gallery">
       <!-- inserted by JS -->
     </div>
@@ -220,7 +220,7 @@
 <!-- ===== STATS ===== -->
 <section>
   <div class="container" style="max-width:1080px;">
-    <h2 class="reveal" style="margin-bottom: var(--s-5);">En chiffres</h2>
+    <h2 class="reveal" style="margin-bottom: var(--s-5);" data-i18n="pd.figures">En chiffres</h2>
     <div class="stats reveal" id="pd-stats">
       <!-- inserted by JS -->
     </div>
@@ -235,7 +235,7 @@
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); flex-wrap:wrap; gap: var(--s-2);">
       <a href="projects.html" class="btn btn-ghost">← Tous les projets</a>
-      <a href="contact.html" class="btn btn-primary">Discuter d'un projet →</a>
+      <a href="contact.html" class="btn btn-primary" data-i18n="pd.discuss">Discuter d'un projet →</a>
     </div>
   </div>
 </section>
@@ -560,11 +560,11 @@ function render() {
   const next = SLUGS[(idx + 1) % SLUGS.length];
   document.getElementById('pd-prev-next').innerHTML = `
     <a class="pd-nav-link prev" href="?p=${prev}">
-      <span class="label">← Projet précédent</span>
+      <span class="label" data-i18n="pd.prev">← Projet précédent</span>
       <span class="title">${PROJECTS_DATA[prev].name}</span>
     </a>
     <a class="pd-nav-link next" href="?p=${next}">
-      <span class="label">Projet suivant →</span>
+      <span class="label" data-i18n="pd.next">Projet suivant →</span>
       <span class="title">${PROJECTS_DATA[next].name}</span>
     </a>
   `;
