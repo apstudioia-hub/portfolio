@@ -211,7 +211,7 @@ const I18N = {
   'about.p2': { fr: 'Créatif et passionné par le commerce et la communication visuelle, je souhaite développer mes compétences tout en contribuant efficacement aux projets de votre entreprise.', en: 'Creative and passionate about commerce and visual communication, I want to develop my skills while contributing effectively to your company\'s projects.' },
   'about.p3': { fr: 'Au-delà des études, je crée des contenus visuels premium dans l\'univers du luxe et de l\'automobile via mon studio AP.StudioIA.', en: 'Beyond studies, I create premium visual content in luxury and automotive through my own studio AP.StudioIA.' },
   'about.location': { fr: 'Localisation', en: 'Location' },
-  'about.locationVal': { fr: 'Île de la Réunion 🇷🇪', en: 'Reunion Island 🇷🇪' },
+  'about.locationVal': { fr: 'Paris 🇫🇷', en: 'Paris 🇫🇷' },
   'about.availability': { fr: 'Disponibilité', en: 'Availability' },
   'about.availabilityVal': { fr: 'Alternance Master Marketing', en: 'Master Marketing apprenticeship' },
   'about.languages': { fr: 'Langues', en: 'Languages' },
@@ -278,7 +278,7 @@ const I18N = {
   'contact.email': { fr: 'Email', en: 'Email' },
   'contact.phone': { fr: 'Téléphone', en: 'Phone' },
   'contact.locTitle': { fr: 'Localisation', en: 'Location' },
-  'contact.locVal': { fr: 'Île de la Réunion 🇷🇪 — Mobile France', en: 'Reunion Island 🇷🇪 — Mobile to mainland France' },
+  'contact.locVal': { fr: 'Paris 🇫🇷', en: 'Paris 🇫🇷' },
   'contact.networks': { fr: 'Réseaux', en: 'Networks' },
 
   // ---------- PROJECT DETAIL ----------
